@@ -35,15 +35,11 @@ const useStyles = makeStyles({
     display: "flex",
     alignItems: "center",
     justifyContent:"center",
-    position:"relative",
-    bottom:"80px"
   },
   rightContent: {
     width: "50%",
     display:"flex",
     alignItems:"center",
-    position:"relative",
-    bottom:"50px",
   },
 });
 

@@ -8,6 +8,7 @@ import {
 import { Header, Footer } from "../layout";
 import routes from "./routes";
 import "./index.css"
+import 'antd/dist/antd.css'
 
 function App() {
   return (

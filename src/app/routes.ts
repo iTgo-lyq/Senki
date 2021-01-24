@@ -1,4 +1,4 @@
-import { Home, Sorting, Welcome, NotFound } from "../pages";
+import { Home, Sorting, Welcome, NotFound,AlgoSimulate } from "../pages";
 
 export const routes = [
   {
@@ -17,6 +17,10 @@ export const routes = [
   {
     path: "/sorting",
     component: Sorting,
+  },
+  {
+    path: "/algosimulate",
+    component: AlgoSimulate,
   },
   {
     path: "/404",

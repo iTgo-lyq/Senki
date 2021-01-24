@@ -68,10 +68,6 @@ export class AnimPlayer {
 
     this.animProviders[key].push({ key, anmi });
 
-    if (this.animProviders[key].length > 1) {
-      // this.animProviders[key].accelerate() //加速
-    }
-
     if (this.anmiStatus === "idle") {
       this.play(performance.now());
     }
@@ -92,22 +88,24 @@ export class AnimPlayer {
   }
 
   play = (timestamp) => {
-    this.anmiStatus = "idle";
+    let flag = "idle";
     for (const key in this.animProviders) {
       const providers = this.animProviders[key];
       const responder = this.animResponders[key];
 
       if (providers[0]) {
         if (!providers[0].anmi.hasBegin()) providers[0].anmi.startTimer();
+
         responder.call(this, timestamp, providers[0], this.removeAnimProvider);
       }
-      if (providers.length > 0) this.anmiStatus = "busy";
+      if (providers.length > 0) flag = "busy";
     }
-    if (this.anmiStatus === "busy") requestAnimationFrame(this.play);
+    if ((this.anmiStatus = flag) === "busy") requestAnimationFrame(this.play);
   };
 }
 
 export class AnimProvider {
+  static count = 0;
   static interpolater = {
     linear: useLinearInterpolater,
     ease: useEaseInterpolater,
@@ -133,10 +131,17 @@ export class AnimProvider {
     this.time[1] = duration;
     this.type = type;
     this.onFinished = onFinished;
+
+    AnimProvider.count++;
+    this.count = AnimProvider.count;
+
+    // console.log("anim create", this.count);
   }
 
   startTimer() {
     this.time[0] = performance.now();
+
+    // console.log("anim start", this.count);
   }
 
   hasBegin() {
@@ -146,8 +151,14 @@ export class AnimProvider {
   getCurrentValue(nowT) {
     const r = (nowT - this.time[0]) / this.time[1];
     if (r >= 1) {
+      // if (this.hasFinished) return this.value[1];
+
       this.hasFinished = true;
+
+      // console.log("anim end", this.count);
+
       this.onFinished.call(this);
+
       return this.value[1];
     } else
       return (

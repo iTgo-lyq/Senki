@@ -41,14 +41,16 @@
       <button onclick="flag()">flag</button>
       <br />
       <button onclick="set()">set</button>
+      <br />
+      <button onclick="refresh()">refresh</button>
     </div>
   </body>
-  <script type="module" >
+  <script type="module">
     import { Scene, SenkiArray } from "./senki/index.js";
-    
+
     const scene = new Scene(document.getElementById("canvas"));
 
-    const h = new SenkiArray(1, 20, 4, 5, 8, 10, 8);
+    const h = new SenkiArray(1, 20, 4);
 
     window.h = h;
 

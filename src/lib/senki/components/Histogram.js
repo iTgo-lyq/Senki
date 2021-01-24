@@ -21,25 +21,33 @@ export default class Histogram extends Group {
     newTargets: [],
   };
 
+  speed = 400;
+
+  animCounter = 0;
+  onStopAnim = () => {};
+
   constructor(data, args, x, y) {
     super(x, y);
 
     Object.assign(this, args);
 
     this.updateCellProfile("init", 0, data);
-
-    this.init();
   }
 
-  init() {
+  init(onFinished) {
     const len = this.data.length;
+
     for (let i = 0; i < len; i++)
       setTimeout(() => {
         this.in(i);
-      }, (len - i - 1) * 400 + (i * i * 1.25) / len);
+      }, (len - i - 1) * this.speed + (i * i * 1.25) / len);
+
+    setTimeout(() => onFinished(), len * this.speed);
   }
 
-  in(idx, v) {
+  in(idx, v, onFinished) {
+    if (onFinished) this.onStopAnim = onFinished;
+
     if (v !== undefined) this.updateCellProfile("add", idx, v);
 
     const direction = !v ? true : idx > this.data.length / 2 ? false : true;
@@ -59,34 +67,36 @@ export default class Histogram extends Group {
     group.add(rect);
     group.add(text);
 
-    this.children.push(group);
+    this.add(group);
 
     rect.useAnimProvider(
       "h",
-      new AnimProvider({
+      this.makeAnimProvider({
         to: this.cell.newTargets[idx].h,
       })
     );
 
     text.useAnimProvider(
       "y",
-      new AnimProvider({
+      this.makeAnimProvider({
         to: this.cell.newTargets[idx].h + this.textMarginButtom,
       })
     );
 
     group.useAnimProvider(
       "x",
-      new AnimProvider({
+      this.makeAnimProvider({
         from: direction ? this.cell.left : this.width - this.cell.left,
         to: this.cell.newTargets[idx].x,
       })
     );
 
-    if (v) this.autoCreateMoveAnimation(idx);
+    if (v) this.autoCreateMoveAnimation(idx, onFinished);
   }
 
-  out(idx) {
+  out(idx, onFinished) {
+    if (onFinished) this.onStopAnim = onFinished;
+
     this.updateCellProfile("del", idx);
 
     const direction = idx > this.data.length / 2 ? false : true;
@@ -97,38 +107,37 @@ export default class Histogram extends Group {
 
     rect.useAnimProvider(
       "o",
-      new AnimProvider({ from: 1, to: 0, type: "ease-in" })
+      this.makeAnimProvider({ from: 1, to: 0, type: "ease-in" })
     );
 
     text.useAnimProvider(
       "o",
-      new AnimProvider({ from: 1, to: 0, type: "ease-in" })
+      this.makeAnimProvider({ from: 1, to: 0, type: "ease-in" })
     );
 
     outItem.useAnimProvider(
       "x",
-      new AnimProvider(
-        {
-          from: outItem.position.x,
-          to: direction ? this.cell.left : this.width - this.cell.left,
-        },
-        () => {
-          this.removeChild(outItem);
-        }
-      )
+      this.makeAnimProvider({
+        from: outItem.position.x,
+        to: direction ? this.cell.left : this.width - this.cell.left,
+      })
     );
 
     this.autoCreateMoveAnimation();
   }
 
-  set(idx, v) {
+  set(idx, v, onFinished) {
+    if (onFinished) this.onStopAnim = onFinished;
+
     this.data[idx] = v;
     this.cell.newTargets[idx].item.findChildByName("text").content = v;
     this.updateCellProfile();
     this.autoCreateMoveAnimation();
   }
 
-  swap(idx1, idx2) {
+  swap(idx1, idx2, onFinished) {
+    if (onFinished) this.onStopAnim = onFinished;
+
     const group1 = this.cell.newTargets[idx1].item;
     const group2 = this.cell.newTargets[idx2].item;
 
@@ -149,7 +158,7 @@ export default class Histogram extends Group {
 
     group1.useAnimProvider(
       "x",
-      new AnimProvider(
+      this.makeAnimProvider(
         { from: group1.position.x, to: group2.position.x },
         () => {
           rect1.fillColor = rc1;
@@ -157,9 +166,10 @@ export default class Histogram extends Group {
         }
       )
     );
+
     group2.useAnimProvider(
       "x",
-      new AnimProvider(
+      this.makeAnimProvider(
         { from: group2.position.x, to: group1.position.x },
         () => {
           rect2.fillColor = rc2;
@@ -177,18 +187,43 @@ export default class Histogram extends Group {
     this.data[idx2] = tempV;
   }
 
-  flag(idx, color) {
+  flag(idx, color, onFinished) {
     const group = this.cell.newTargets[idx].item;
+
     const rect = group.findChildByName("rect");
     const text = group.findChildByName("text");
+
     const rc = rect.fillColor;
     const tc = text.color;
+
     rect.fillColor = color;
     text.color = color;
+
+    if (onFinished) onFinished();
+
     return function () {
       rect.fillColor = rc;
       text.color = tc;
     };
+  }
+
+  makeAnimProvider(args, onFinished) {
+    this.animCounter++;
+    return new AnimProvider(
+      Object.assign(args, { duration: this.speed }),
+      () => {
+        this.animCounter--;
+        if (onFinished) onFinished();
+        if (this.animCounter === 0) this.onStopAnim();
+      }
+    );
+  }
+
+  refresh(onFinished) {
+    if (onFinished) this.onStopAnim = onFinished;
+
+    this.updateCellProfile();
+    this.autoCreateMoveAnimation();
   }
 
   updateCellProfile(flag, idx, v) {
@@ -255,17 +290,17 @@ export default class Histogram extends Group {
 
       group.useAnimProvider(
         "x",
-        new AnimProvider({ from: group.position.x, to: newT.x })
+        this.makeAnimProvider({ from: Math.ceil(group.position.x), to: newT.x })
       );
 
       rect.useAnimProvider(
         "h",
-        new AnimProvider({ from: rect.height, to: newT.h })
+        this.makeAnimProvider({ from: rect.height, to: newT.h })
       );
 
       text.useAnimProvider(
         "y",
-        new AnimProvider({
+        this.makeAnimProvider({
           from: text.position.y,
           to: newT.h + this.textMarginButtom,
         })

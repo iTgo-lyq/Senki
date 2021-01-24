@@ -17,7 +17,7 @@
       width: 18%;
       height: 600px;
     }
-    #panel  button{
+    #panel button {
       margin: 20px;
     }
   </style>
@@ -25,24 +25,35 @@
     <canvas id="canvas"></canvas>
     <div id="panel">
       <button onclick="push()">push</button>
-      <br>
+      <br />
       <button onclick="pop()">pop</button>
-      <br>
+      <br />
       <button onclick="shift()">shift</button>
-      <br>
+      <br />
       <button onclick="unshift()">unshift</button>
-      <br>
+      <br />
       <button onclick="add()">add</button>
-      <br>
+      <br />
       <button onclick="remove()">remove</button>
-      <br>
+      <br />
       <button onclick="swap()">swap</button>
-      <br>
+      <br />
       <button onclick="flag()">flag</button>
-      <br>
+      <br />
       <button onclick="set()">set</button>
     </div>
   </body>
-  <script src="./senki.js"></script>
-  <script src="./main.js"></script>
+  <script type="module" >
+    import { Scene, SenkiArray } from "./senki/index.js";
+    
+    const scene = new Scene(document.getElementById("canvas"));
+
+    const h = new SenkiArray(1, 20, 4, 5, 8, 10, 8);
+
+    window.h = h;
+
+    scene.add(h.senkiNode);
+
+    console.log(scene);
+  </script>
 </html>

@@ -58,8 +58,8 @@ const useStyles:any = makeStyles({
       borderBottom:"4px solid white"
     },
     marginRight:"35px",
-    height:"56px",
-    lineHeight:"56px",
+    height:"60px",
+    lineHeight:"60px",
     borderBottom:"4px solid #d3d7da"
   },
 })

@@ -1,4 +1,11 @@
-import { Home, Sorting, Welcome, NotFound,AlgoSimulate } from "../pages";
+import {
+  Home,
+  Sorting,
+  Welcome,
+  NotFound,
+  AlgoSimulate,
+  SimulateDetail,
+} from "../pages";
 
 export const routes = [
   {
@@ -21,6 +28,10 @@ export const routes = [
   {
     path: "/algosimulate",
     component: AlgoSimulate,
+  },
+  {
+    path: "/simulatedetail",
+    component: SimulateDetail,
   },
   {
     path: "/404",

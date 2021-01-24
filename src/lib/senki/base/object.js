@@ -5,7 +5,7 @@ export class SenkiNode extends AnimPlayer {
   position = { x: 0, y: 0 };
   abs = { x: 0, y: 0 };
 
-  name = "";
+  name;
 
   constructor(x = 0, y = 0) {
     super();

@@ -23,23 +23,23 @@ const useStyles = makeStyles({
   titleText: {
     fontSize: "40px",
     fontWeight: 800,
-    marginBottom:"15px",
+    marginBottom: "15px",
   },
   DesText: {
     fontSize: "26px",
     fontWeight: 200,
-    marginBottom:"30px",
+    marginBottom: "30px",
   },
   leftContent: {
     width: "50%",
     display: "flex",
     alignItems: "center",
-    justifyContent:"center",
+    justifyContent: "center",
   },
   rightContent: {
     width: "50%",
-    display:"flex",
-    alignItems:"center",
+    display: "flex",
+    alignItems: "center",
   },
 });
 
@@ -59,12 +59,18 @@ function Welcome() {
         </div>
       </div>
       <div className={classes.rightContent}>
-        
-      <video style={{borderRadius:"10px"}} width="600" height="400" controls poster="https://kairz-1258976754.cos.ap-shanghai.myqcloud.com/%E8%A5%BF%E6%B9%964.jpg">
-  <source src="https://kairz-1258976754.cos.ap-shanghai.myqcloud.com/%E5%BE%AE%E6%B3%9Bv45.mp4" type="video/mp4" />
-</video>
-
-
+        <video
+          style={{ borderRadius: "10px" }}
+          width="600"
+          height="400"
+          controls
+          poster="https://kairz-1258976754.cos.ap-shanghai.myqcloud.com/%E8%A5%BF%E6%B9%964.jpg"
+        >
+          <source
+            src="https://kairz-1258976754.cos.ap-shanghai.myqcloud.com/%E5%BE%AE%E6%B3%9Bv45.mp4"
+            type="video/mp4"
+          />
+        </video>
       </div>
     </div>
   );

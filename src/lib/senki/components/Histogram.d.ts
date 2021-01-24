@@ -2,7 +2,11 @@ import { AnimProvider, AnimProviderConfig } from "../base/anim";
 import { Group } from "../base/object";
 import { Rect, SenkiText } from "../base/shape";
 
-export type HistogramConfig = {
+type HistogramConfig = {
+  /** 直方图高度，不包括顶部文字 */
+  height: number;
+  /** 直方图宽度 */
+  width: number;
   /** 柱形间隔 默认 5*/
   space: number;
   /** 最小柱宽 默认 5*/

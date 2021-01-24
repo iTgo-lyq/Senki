@@ -2,7 +2,7 @@ import { makeStyles, Theme } from '@material-ui/core/styles';
 
 interface Props {}
 
-const useStyles:any = makeStyles({
+const useStyles = makeStyles({
   container: {
     height:"50px",
     backgroundColor:"#2c303a",

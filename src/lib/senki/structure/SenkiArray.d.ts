@@ -38,10 +38,10 @@ export default class SenkiArray {
 
   /**
    * 标记元素颜色, 返回取消标记的函数，
-   * 因为标记动作本身不一定立刻执行，因此返回值是一个Promise
+   * 因为动画队列的关系，标记动作本身不一定立刻执行，因此取消函数的返回值是一个Promise
    * */
-  flag(idx: number, color: string): Promise<void>;
+  flag(idx: number, color: string): () => Promise<void>;
 
-  /** 刷新节点显示 */
+  /** 对画布上节点的属性设置并不一定立刻生效，需要调用此函数刷新画布 */
   refresh(): void;
 }

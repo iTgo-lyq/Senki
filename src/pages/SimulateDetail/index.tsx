@@ -2,6 +2,7 @@ import { useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import { Breadcrumb } from "antd";
 import { HomeOutlined, UserOutlined } from "@ant-design/icons";
+import { ControlItem } from "..";
 
 const useStyles: any = makeStyles({
   outContainer: {
@@ -30,20 +31,26 @@ const useStyles: any = makeStyles({
     display: "flex",
     alignItems: "center",
     height: "39vh",
-    backgroundColor: "#A4B7D3",
-    justifyContent:"space-between"
+    backgroundColor: "#2c303a",
+    justifyContent: "space-between",
   },
   operationPart: {
-      height:"47%",
-      marginTop:"1%",
-      marginBottom:"1%",
-      backgroundColor:"white"
+    height: "47%",
+    marginTop: "1%",
+    marginBottom: "1%",
+    backgroundColor: "white",
   },
   operationSingleArea: {
-      width:"48%",
-      height:"100%",
-      padding:"0.5%"
-  }
+    width: "48%",
+    height: "100%",
+    padding: "0.5%",
+  },
+  operationCode: {
+    backgroundColor:"white",
+    height:"100%",
+    width:"100%",
+  },
+
 });
 
 const Index = () => {
@@ -82,8 +89,13 @@ const Index = () => {
           <div className={classes.operationPart}>数组操作</div>
         </div>
         {/* 右半部分 */}
-        <div className={classes.operationSingleArea}></div>
+        <div className={classes.operationSingleArea}>
+          {/* 伪代码 */}
+          <div className={classes.operationCode}></div>
+        </div>
       </div>
+      {/* 控制条 */}
+      <ControlItem />
     </div>
   );
 };

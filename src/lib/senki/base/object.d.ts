@@ -37,6 +37,8 @@ export class Group extends SenkiNode {
 
   removeChild(n: SenkiNode): void;
 
+  removeAllChild: () => void;
+
   render(args) {
     for (let n of this.children) n.render(args);
   }
@@ -46,6 +48,9 @@ export class Group extends SenkiNode {
   setPivot: (x: number, y: number) => void;
 
   findChildByName(name: string): SenkiNode;
+
+  /** 代价不小，少调用 */
+  isAnimAllOver(): boolean;
 
   _updateChildPivot(): void;
 }

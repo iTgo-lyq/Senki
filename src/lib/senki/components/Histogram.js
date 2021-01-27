@@ -3,6 +3,7 @@ import { Group } from "../base/object.js";
 import { Rect, SenkiText } from "../base/shape.js";
 
 export default class Histogram extends Group {
+  scene;
   data = [];
   height = 500;
   width = 1000;
@@ -28,8 +29,11 @@ export default class Histogram extends Group {
 
   constructor(data, args, x, y) {
     super(x, y);
-
+    
     Object.assign(this, args);
+
+    if (this.scene) this.scene.add(this)
+    this.height -= 50
 
     this.updateCellProfile("init", 0, data);
   }
@@ -188,6 +192,7 @@ export default class Histogram extends Group {
   }
 
   flag(idx, color, onFinished) {
+    console.log(1)
     const group = this.cell.newTargets[idx].item;
 
     const rect = group.findChildByName("rect");
@@ -204,6 +209,7 @@ export default class Histogram extends Group {
     return function () {
       rect.fillColor = rc;
       text.color = tc;
+      console.log(2)
     };
   }
 

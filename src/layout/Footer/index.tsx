@@ -1,18 +1,6 @@
-import { makeStyles, Theme } from '@material-ui/core/styles';
+import { makeStyles } from "@material-ui/core/styles";
 
-interface Props {}
-
-const useStyles = makeStyles({
-  container: {
-    height:"50px",
-    backgroundColor:"#2c303a",
-    color:"#d3d7da",
-    lineHeight:"50px",
-    textAlign:"center"
-  }
-})
-
-const Footer = ({}: Props) => {
+const Footer = () => {
   const classes = useStyles();
   return (
     <div className={classes.container}>
@@ -22,3 +10,13 @@ const Footer = ({}: Props) => {
 };
 
 export default Footer;
+
+const useStyles = makeStyles({
+  container: {
+    height: "50px",
+    backgroundColor: "#2c303a",
+    color: "#d3d7da",
+    lineHeight: "50px",
+    textAlign: "center",
+  },
+});

@@ -1,13 +1,18 @@
 import {
-  Home,
-  Sorting,
   Welcome,
   NotFound,
   AlgoSimulate,
+  VisualEditor,
   SimulateDetail,
 } from "../pages";
 
-export const routes = [
+type RouteItem = {
+  path: string;
+  exact?: boolean;
+  component: React.FC;
+};
+
+export const routes: RouteItem[] = [
   {
     path: "/",
     exact: true,
@@ -18,20 +23,16 @@ export const routes = [
     component: Welcome,
   },
   {
-    path: "/home",
-    component: Home,
-  },
-  {
-    path: "/sorting",
-    component: Sorting,
-  },
-  {
     path: "/algosimulate",
     component: AlgoSimulate,
   },
   {
     path: "/simulatedetail",
     component: SimulateDetail,
+  },
+  {
+    path: "/visual-editor",
+    component: VisualEditor,
   },
   {
     path: "/404",

@@ -50,14 +50,17 @@ export class Circle extends SenkiNode {
   constructor(args, x, y) {
     super(x, y);
     Object.assign(this, args);
+
+    this.registerAnimResponder("r", this.changeR);
+    this.registerAnimResponder("o", this.changeO);
   }
 
   render({ ctx }) {
     ctx.save();
 
-    ctx.fillStyle = this.fillColor;
+    ctx.fillStyle = this.fillColor + opacityToHex(this.opacity);
     ctx.strokeWidth = this.borderWidth;
-    ctx.strokeStyle = this.borderColor;
+    ctx.strokeStyle = this.borderColor + opacityToHex(this.opacity);
 
     ctx.beginPath();
     ctx.arc(this.abs.x, this.abs.y, this.radius, 0, Math.PI * 2);
@@ -66,6 +69,16 @@ export class Circle extends SenkiNode {
     ctx.fill();
 
     ctx.restore();
+  }
+
+  changeR(timestamp, { key, anmi }, rm) {
+    this.radius = anmi.getCurrentValue(timestamp);
+    if (anmi.hasFinished) rm.call(this, key);
+  }
+
+  changeO(timestamp, { key, anmi }, rm) {
+    this.opacity = anmi.getCurrentValue(timestamp);
+    if (anmi.hasFinished) rm.call(this, key);
   }
 }
 

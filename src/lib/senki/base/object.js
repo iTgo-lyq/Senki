@@ -60,6 +60,10 @@ export class Group extends SenkiNode {
     this.children.splice(idx, 1);
   }
 
+  removeAllChild() {
+    this.children = [];
+  }
+
   render(args) {
     for (let n of this.children) n.render(args);
   }
@@ -87,11 +91,22 @@ export class Group extends SenkiNode {
       n.setPivot(this.abs.x, this.abs.y);
     }
   }
+
+  isAnimAllOver() {
+    let q = [this];
+    while (q.length !== 0) {
+      let n = q.shift();
+      if (n.anmiStatus === "busy") return false;
+      if (n.children) for (let i = 0; i < n.children.length; i++) q.push(n.children[i]);
+    }
+    return true;
+  }
 }
 
 export class Scene extends Group {
   constructor(canvas, { autoRender = true } = {}) {
     super();
+    canvas.style.transform = "scaleY(-1)";
     this.ctx = canvas.getContext("2d");
     this.width = canvas.width = canvas.clientWidth;
     this.height = canvas.height = canvas.clientHeight;

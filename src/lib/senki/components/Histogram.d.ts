@@ -1,8 +1,10 @@
 import { AnimProvider, AnimProviderConfig } from "../base/anim";
-import { Group } from "../base/object";
+import { Group, Scene } from "../base/object";
 import { Rect, SenkiText } from "../base/shape";
 
 type HistogramConfig = {
+  /** 自动加入该Scene */
+  scene: Scene;
   /** 直方图高度，不包括顶部文字 */
   height: number;
   /** 直方图宽度 */

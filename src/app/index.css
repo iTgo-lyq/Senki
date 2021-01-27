@@ -1,24 +1,41 @@
 @font-face {
-    font-family: '经典雅黑';
-    src: url('https://k-1258976754.cos.ap-shanghai.myqcloud.com/font/35-%E7%BB%8F%E5%85%B8%E9%9B%85%E9%BB%91.ttf');
+  font-family: "经典雅黑";
+  src: url("https://k-1258976754.cos.ap-shanghai.myqcloud.com/font/35-%E7%BB%8F%E5%85%B8%E9%9B%85%E9%BB%91.ttf");
 }
 @font-face {
-    font-family: '手刻宋';
-    src: url('https://k-1258976754.cos.ap-shanghai.myqcloud.com/font/95-%E6%89%8B%E5%88%BB%E5%AE%8B.ttf');
+  font-family: "手刻宋";
+  src: url("https://k-1258976754.cos.ap-shanghai.myqcloud.com/font/95-%E6%89%8B%E5%88%BB%E5%AE%8B.ttf");
 }
 @font-face {
-    font-family: '创细黑';
-    src: url('https://k-1258976754.cos.ap-shanghai.myqcloud.com/font/57-%E5%88%9B%E7%BB%86%E9%BB%91.ttf');
+  font-family: "创细黑";
+  src: url("https://k-1258976754.cos.ap-shanghai.myqcloud.com/font/57-%E5%88%9B%E7%BB%86%E9%BB%91.ttf");
 }
 @font-face {
-    font-family: '龙吟手书';
-    src: url('https://k-1258976754.cos.ap-shanghai.myqcloud.com/font/55-%E9%BE%99%E5%90%9F%E6%89%8B%E4%B9%A6.ttf');
+  font-family: "龙吟手书";
+  src: url("https://k-1258976754.cos.ap-shanghai.myqcloud.com/font/55-%E9%BE%99%E5%90%9F%E6%89%8B%E4%B9%A6.ttf");
 }
 @font-face {
-    font-family: '飞驰标题体';
-    src: url('https://k-1258976754.cos.ap-shanghai.myqcloud.com/font/181-%E9%A3%9E%E9%A9%B0%E6%A0%87%E9%A2%98%E4%BD%93.ttf');
+  font-family: "飞驰标题体";
+  src: url("https://k-1258976754.cos.ap-shanghai.myqcloud.com/font/181-%E9%A3%9E%E9%A9%B0%E6%A0%87%E9%A2%98%E4%BD%93.ttf");
 }
 /* df {
     transform: rotate();
     color:#d3d7da
 } */
+
+*::-webkit-scrollbar {
+  /*滚动条整体样式*/
+  width: 6px; /*高宽分别对应横竖滚动条的尺寸*/
+  height: 1px;
+  background-color: #F5F5F5;
+}
+*::-webkit-scrollbar-thumb {
+  /*滚动条里面小方块*/
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+  background: #535353;
+}
+*::-webkit-scrollbar-track {
+  /*滚动条里面轨道*/
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+  background: #ededed;
+}

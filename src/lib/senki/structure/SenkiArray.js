@@ -4,8 +4,8 @@ import Histogram from "../components/Histogram.js";
 export default class SenkiArray extends Array {
   static config = {
     position: {
-      x: 100,
-      y: 100,
+      x: 0,
+      y: 0,
     },
   };
 
@@ -112,19 +112,17 @@ export default class SenkiArray extends Array {
       value: undefined,
       caller: undefined,
       set(fn) {
-        if (this.caller) this.caller(fn);
+        if (this.caller) fn();
         else this.value = fn;
       },
     };
 
     this.addJob((next) => resRef.set(this.senkiNode.flag(idx, color, next)));
 
-    const cancelFlag = new Promise((res) => {
-      if (resRef.value) res(resRef.value);
-      else resRef.caller = res;
-    });
-
-    return async () => (await cancelFlag)();
+    return () => {
+      if (resRef.value) resRef.value();
+      else resRef.caller = true;
+    };
   }
 
   refresh() {

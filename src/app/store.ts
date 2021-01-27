@@ -6,11 +6,9 @@ import {
 } from "@reduxjs/toolkit";
 import { useDispatch } from "react-redux";
 import appSlice from "./appSlice";
-import homeSlice from "../pages/Home/homeSlice";
 
 const rootReducer = combineReducers({
   app: appSlice,
-  home: homeSlice,
 });
 
 const store = configureStore({

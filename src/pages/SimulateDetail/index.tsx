@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
+import React, { useLayoutEffect, useRef, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Breadcrumb } from "antd";
 import { HomeOutlined, UserOutlined } from "@ant-design/icons";
@@ -6,12 +6,15 @@ import { ControlTrack, useNormalStyles } from "../../components";
 import { C } from "../../util";
 import CodeDesc from "./CodeDesc";
 import { Scene, SenkiArray } from "../../lib/senki";
-import makeBubbleAlgoSource from "../../lib/algo_desc/sort/bubble";
-import CodeControl, { CodeContext } from "../../lib/algo_desc/CodeControl";
+import {
+  CodeContext,
+  CodeControl,
+  makeBubbleAlgoSource,
+} from "../../lib/algo_desc";
 
 let scene: Scene;
 let codeControl: CodeControl;
-let [fakeCode, desc, realCode] = makeBubbleAlgoSource([34, 9, 12, 23, 4, 21]);
+let [fakeCode, desc, realCode] = makeBubbleAlgoSource();
 
 let tempTask: () => void | undefined; // 保存断点继续的执行函数
 
@@ -19,6 +22,7 @@ const SimulateDetail = () => {
   const classes = useStyles();
   const { flexRow, flexCol } = useNormalStyles();
 
+  const [data, setData] = useState<[]>()
   const [status, setStatus] = useState<"stop" | "play" | "finish">("stop");
   const [codeInfo, setCodeInfo] = useState({ line: -1, desc: -1 }); // TODO  利用line高亮对应代码行
 
@@ -32,6 +36,7 @@ const SimulateDetail = () => {
     const handleWait = ({ info, resolve }: CodeContext) => {
       setCodeInfo(info);
 
+      // 确定动画结束了再进行下一步
       const tryToNext = () => {
         if (statusRef.current === "play") {
           if (scene.isAnimAllOver()) resolve();
@@ -43,7 +48,6 @@ const SimulateDetail = () => {
     };
 
     const handleEnd = () => {
-      console.log(1);
       setStatus("finish");
       setCodeInfo({ line: -1, desc: -1 });
     };
@@ -65,7 +69,7 @@ const SimulateDetail = () => {
   };
 
   const handleRestart = () => {
-    [fakeCode, desc, realCode] = makeBubbleAlgoSource([34, 9, 12, 23, 4, 21]);
+    [fakeCode, desc, realCode] = makeBubbleAlgoSource(data);
     codeControl.destroy(); // 一定要记得销毁
     createNewCodeControl();
     setStatus("play");
@@ -87,7 +91,6 @@ const SimulateDetail = () => {
 
   return (
     <div className={C([classes.container, flexCol])}>
-      {/* 面包屑导航 */}
       <Breadcrumb className={classes.breadNav}>
         <Breadcrumb.Item href="/">
           <HomeOutlined />

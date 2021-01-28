@@ -22,23 +22,30 @@ const desc = [
 
 const makeRealCode = (arr: number[]) => `
 const array = new SenkiArray(${arr.toString()});
-await wait({line: 0, desc: 0})
+await wait({line: [1, 1], desc: 1})
 for (var i = 0; i < array.length - 1; i++) {
-  await wait({line: 1, desc: 1})
+  await wait({line: [2, 2], desc: 2})
   for (var j = 0; j < array.length - 1 - i; j++) {
     const cancel = array.flag(j, "#407434")
-    await wait({line: 2, desc: 3})
+    await wait({line: [3, 3], desc: 3})
     if (array[j] > array[j + 1]) {
-      await wait({line: 3, desc: 4})
+      await wait({line: [4, 4], desc: 4})
       array.swap(j, j+1)
-      await wait({line: [4,5,6], desc: 4})
+      await wait({line: [5,7], desc: 4})
     }
     cancel();
   }
 }
 `;
 
-const makeBubbleAlgoSource = (arr: number[]) =>
-  makeAlgoSource(makeShower(arr), desc, makeRealCode(arr));
+const makeBubbleAlgoSource = (arr?: number[]) => {
+  if (!arr) {
+    arr = [];
+    for (let i = 0; i < 10; i++) {
+      arr.push(Math.ceil(Math.random() * 100));
+    }
+  }
+  return makeAlgoSource(makeShower(arr), desc, makeRealCode(arr));
+};
 
 export default makeBubbleAlgoSource;

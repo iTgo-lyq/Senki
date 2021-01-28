@@ -75,6 +75,7 @@ export default class CodeControl extends MicroEvent<CodeControlEvent> {
 
     CodeControlPool.push(this);
     console.log(CodeControlPool)
+    // eslint-disable-next-line
     this.executableFunction = Function(`
     ${this._breakpointFunctionDeclaration}
     return async function () {

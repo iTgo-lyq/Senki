@@ -29,7 +29,7 @@ const Header = () => {
             动手演练
           </Link>
           <Link to="" className={classes.navItem}>
-            Senki.JS文档
+            关于我们
           </Link>
         </div>
       </div>

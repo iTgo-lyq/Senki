@@ -192,7 +192,6 @@ export default class Histogram extends Group {
   }
 
   flag(idx, color, onFinished) {
-    console.log(1)
     const group = this.cell.newTargets[idx].item;
 
     const rect = group.findChildByName("rect");
@@ -209,7 +208,6 @@ export default class Histogram extends Group {
     return function () {
       rect.fillColor = rc;
       text.color = tc;
-      console.log(2)
     };
   }
 

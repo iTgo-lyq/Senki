@@ -1,0 +1,114 @@
+.startButton {
+    display: inline-block;
+    margin-top: 140px;
+    padding: .7em 1.5em;
+    font-size: 20px;
+    letter-spacing: 2px;
+    text-decoration: none;
+    outline: none;
+    color: #fff;
+    /* background-color: #fe4365; */
+    border:white 3px solid;
+    border-radius: 40px;
+    background: rgb(17, 93, 246);
+    -webkit-background-clip: padding-box;
+    background-clip: padding-box;
+    -webkit-transition: -webkit-box-shadow .3s;
+    transition: box-shadow .3s;
+  }
+ .startButton:hover, .startButton:focus {
+    /* -webkit-box-shadow: 0 0 0 2px #cff09e, 0 0 0 4px #ff0364;
+    box-shadow: 0 0 0 2px #cff09e, 0 0 0 4px #ff0364; */
+    -webkit-transition-timing-function: cubic-bezier(0.6, 4, 0.3, 0.8);
+    transition-timing-function: cubic-bezier(0.6, 4, 0.3, 0.8);
+    -webkit-animation: gelatine 0.5s 1;
+    animation: gelatine 0.5s 1;
+    cursor: pointer;
+    color: #fff;
+  
+  }
+
+
+  @keyframes gelatine {
+    from, to {
+      -webkit-transform: scale(1, 1);
+      transform: scale(1, 1);
+    }
+  
+    25% {
+      -webkit-transform: scale(0.9, 1.1);
+      transform: scale(0.9, 1.1);
+    }
+  
+    50% {
+      -webkit-transform: scale(1.1, 0.9);
+      transform: scale(1.1, 0.9);
+    }
+  
+    75% {
+      -webkit-transform: scale(0.95, 1.05);
+      transform: scale(0.95, 1.05);
+    }
+  
+    from, to {
+      -webkit-transform: scale(1, 1);
+      transform: scale(1, 1);
+    }
+  
+    25% {
+      -webkit-transform: scale(0.9, 1.1);
+      transform: scale(0.9, 1.1);
+    }
+  
+    50% {
+      -webkit-transform: scale(1.1, 0.9);
+      transform: scale(1.1, 0.9);
+    }
+  
+    75% {
+      -webkit-transform: scale(0.95, 1.05);
+      transform: scale(0.95, 1.05);
+    }
+  }
+  @-webkit-keyframes gelatine {
+    from, to {
+      -webkit-transform: scale(1, 1);
+      transform: scale(1, 1);
+    }
+  
+    25% {
+      -webkit-transform: scale(0.9, 1.1);
+      transform: scale(0.9, 1.1);
+    }
+  
+    50% {
+      -webkit-transform: scale(1.1, 0.9);
+      transform: scale(1.1, 0.9);
+    }
+  
+    75% {
+      -webkit-transform: scale(0.95, 1.05);
+      transform: scale(0.95, 1.05);
+    }
+  
+    from, to {
+      -webkit-transform: scale(1, 1);
+      transform: scale(1, 1);
+    }
+  
+    25% {
+      -webkit-transform: scale(0.9, 1.1);
+      transform: scale(0.9, 1.1);
+    }
+  
+    50% {
+      -webkit-transform: scale(1.1, 0.9);
+      transform: scale(1.1, 0.9);
+    }
+  
+    75% {
+      -webkit-transform: scale(0.95, 1.05);
+      transform: scale(0.95, 1.05);
+    }
+  }
+  

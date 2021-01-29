@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="cn">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>画图</title>
+</head>
+<style>
+  #canvas {
+    width: 1000px;
+    height: 600px;
+    border: 1px solid black;
+    transform: scaleY(-1);
+  }
+
+  #panel {
+    float: right;
+    width: 18%;
+    height: 600px;
+  }
+
+  #panel button {
+    margin: 20px;
+  }
+</style>
+
+<body>
+  <canvas id="canvas"></canvas>
+  <div id="panel">
+    <button onclick="push()">push</button>
+    <br />
+    <button onclick="pop()">pop</button>
+    <br />
+    <button onclick="shift()">shift</button>
+    <br />
+    <button onclick="unshift()">unshift</button>
+    <br />
+    <button onclick="add()">add</button>
+    <br />
+    <button onclick="remove()">remove</button>
+    <br />
+    <button onclick="swap()">swap</button>
+    <br />
+    <button onclick="flag()">flag</button>
+    <br />
+    <button onclick="set()">set</button>
+    <br />
+    <button onclick="refresh()">refresh</button>
+  </div>
+</body>
+<script type="module">
+  import { Scene, SenkiArray, SenkiLinkedNode } from "./senki/index.js";
+
+  window.canvas = document.getElementById("canvas")
+
+  const scene = new Scene(canvas);
+
+  // const h = new SenkiArray(1, 20, 4);
+
+  // window.h = h;
+
+  scene.add(SenkiLinkedNode.senkiForest);
+
+  SenkiLinkedNode.setCanvasDimensions({ width: canvas.width, height: canvas.height })
+
+  console.log(scene);
+
+  window.a = new SenkiLinkedNode("12")
+  window.b = new SenkiLinkedNode("12")
+  window.c = new SenkiLinkedNode("12")
+  window.d = new SenkiLinkedNode("12")
+  window.e = new SenkiLinkedNode("12")
+</script>
+
+</html>

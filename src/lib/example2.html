@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="cn">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>代码编辑器</title>
+  </head>
+  <style>
+    #area {
+      width: 500px;
+      height: 300px;
+    }
+  </style>
+  <body>
+    <textarea id="area" placeholder="输入代码">
+      console.log(1)
+      console.log(2)
+      console.log(3)  
+    </textarea>
+    <button id="sub">运行</button>
+    <p id="result"></p>
+  </body>
+  <script>
+    const input = document.getElementById("area");
+    const subBtn = document.getElementById("sub");
+    const result = document.getElementById("result");
+
+    function wait(tip) {
+      return new Promise((res, rej) => {
+        if (confirm("继续执行？" + tip)) {
+          res();
+        } else {
+          rej("已手动退出");
+          alert("已退出");
+        }
+      });
+    }
+
+    subBtn.onclick = () => {
+      const cmds = input.value.trim().split("\n");
+      const fn = Function(`
+          return async function () {
+            await wait('line：1');
+            ${cmds.reduce(
+              (pre, code, idx) =>
+                pre +
+                `
+                await wait('line：${idx + 1}');
+                ${code}
+              `
+            )};
+          }
+        `)();
+
+      fn().catch((err) => (result.innerText = err));
+    };
+  </script>
+</html>

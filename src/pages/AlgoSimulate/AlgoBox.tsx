@@ -35,9 +35,10 @@ const useStyles = makeStyles({
     backgroundColor: "white",
     // width:"40%",
     // height:"50px",
-    padding: "10px",
+    padding: "20px",
     boxSizing: "border-box",
     display: "flex",
+    borderRadius: "20px"
     // alignItems:"center",
   },
   sortGif: {

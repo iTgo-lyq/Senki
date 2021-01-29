@@ -134,7 +134,6 @@ export default SimulateDetail;
 const useStyles = makeStyles({
   container: {
     minHeight: "calc(100vh - 60px)",
-    backgroundColor: "#f2f2f2",
   },
   breadNav: {
     padding: 13,

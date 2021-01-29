@@ -22,7 +22,7 @@ const SimulateDetail = () => {
   const classes = useStyles();
   const { flexRow, flexCol } = useNormalStyles();
 
-  const [data, setData] = useState<[]>()
+  const [data] = useState<[]>()
   const [status, setStatus] = useState<"stop" | "play" | "finish">("stop");
   const [codeInfo, setCodeInfo] = useState({ line: -1, desc: -1 }); // TODO  利用line高亮对应代码行
 
@@ -134,7 +134,6 @@ export default SimulateDetail;
 const useStyles = makeStyles({
   container: {
     minHeight: "calc(100vh - 60px)",
-    backgroundColor: "#f2f2f2",
   },
   breadNav: {
     padding: 13,

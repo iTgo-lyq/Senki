@@ -1,12 +1,12 @@
 import { makeStyles } from "@material-ui/core/styles";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 const Header = () => {
   const classes = useStyles();
   return (
     <div className={classes.headerContainer}>
       <div className={classes.headerInnerContainer}>
-        <Link to="/welcome" className={classes.logoTitleBox}>
+        <NavLink to="/welcome" className={classes.logoTitleBox}>
           <div>
             <img
               className={classes.logoImg}
@@ -20,17 +20,17 @@ const Header = () => {
           >
             Senki
           </div>
-        </Link>
+        </NavLink>
         <div className={classes.navItemBox}>
-          <Link to="/algosimulate" className={classes.navItem}>
+          <NavLink to="/algosimulate" className={classes.navItem}>
             算法模拟
-          </Link>
-          <Link to="/visual-editor" className={classes.navItem}>
+          </NavLink>
+          <NavLink to="/visual-editor" className={classes.navItem}>
             动手演练
-          </Link>
-          <Link to="" className={classes.navItem}>
-            Senki.JS文档
-          </Link>
+          </NavLink>
+          <NavLink to="" className={classes.navItem}>
+            关于我们
+          </NavLink>
         </div>
       </div>
     </div>
@@ -42,10 +42,10 @@ export default Header;
 const useStyles = makeStyles({
   headerContainer: {
     height: "60px",
-    backgroundColor: "#2c303a",
+    width: "100%"
   },
   headerInnerContainer: {
-    width: "70%",
+    width: "90%",
     margin: "0 auto",
     height: "60px",
     display: "flex",
@@ -66,8 +66,8 @@ const useStyles = makeStyles({
     height: "40px",
   },
   logoTitle: {
-    color: "white",
-    fontSize: "27px",
+    color: "rgb(13, 51, 128)",
+    fontSize: "32px",
     marginLeft: "10px",
     paddingBottom: "5px",
     boxSizing: "border-box",
@@ -82,19 +82,27 @@ const useStyles = makeStyles({
   navItemBox: {
     display: "flex",
     alignItems: "center",
-    marginRight: "30px",
+    marginRight: "10px",
     height: "60px",
   },
   navItem: {
     "&:hover": {
       cursor: "pointer",
       color: "white",
-      borderBottom: "4px solid white",
+      textDecoration: "1px",
     },
-    color: "#d3d7da",
-    marginRight: "35px",
+    color: "rgb(13, 51, 128)",
+    fontWeight: 600,
+    fontSize: "1rem",
+    marginRight: "40px",
     height: "60px",
     lineHeight: "60px",
-    borderBottom: "4px solid #d3d7da",
+    position: 'relative',
+    "&::after":{
+      
+    }
   },
+  // activeStyle: {
+  //   color: ;
+  // }
 });

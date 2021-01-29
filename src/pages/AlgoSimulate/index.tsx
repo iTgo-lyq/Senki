@@ -46,7 +46,6 @@ const useStyles = makeStyles({
   },
   outContainer: {
     minHeight: "calc(100vh - 60px)",
-    backgroundColor: "#f2f2f2",
   },
   innerContainer: {
     width: "70%",

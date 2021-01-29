@@ -1,33 +1,31 @@
 .startButton {
     display: inline-block;
-    margin: 15px 15px 0;
-    padding: .6em 1.1em;
-    font-size: 26px;
-    font-size: 1.625rem;
+    margin-top: 140px;
+    padding: .7em 1.5em;
+    font-size: 20px;
+    letter-spacing: 2px;
     text-decoration: none;
     outline: none;
     color: #fff;
     /* background-color: #fe4365; */
     border:white 3px solid;
-    border-radius: 7px;
+    border-radius: 40px;
+    background: rgb(17, 93, 246);
     -webkit-background-clip: padding-box;
     background-clip: padding-box;
-    -webkit-box-shadow: 0 0 0 -2px #cff09e, 0 0 0 -1px #fe4365;
-    box-shadow: 0 0 0 -2px #cff09e, 0 0 0 -1px #fe4365;
     -webkit-transition: -webkit-box-shadow .3s;
     transition: box-shadow .3s;
   }
  .startButton:hover, .startButton:focus {
     /* -webkit-box-shadow: 0 0 0 2px #cff09e, 0 0 0 4px #ff0364;
     box-shadow: 0 0 0 2px #cff09e, 0 0 0 4px #ff0364; */
-    -webkit-box-shadow: 0 0 0 2px #ffffff, 0 0 0 2px #ffffff;
-    box-shadow: 0 0 0 2px #ffffff, 0 0 0 2px #ffffff;
     -webkit-transition-timing-function: cubic-bezier(0.6, 4, 0.3, 0.8);
     transition-timing-function: cubic-bezier(0.6, 4, 0.3, 0.8);
     -webkit-animation: gelatine 0.5s 1;
     animation: gelatine 0.5s 1;
     cursor: pointer;
     color: #fff;
+  
   }
 
 

@@ -31,7 +31,6 @@ function Welcome() {
           style={{ borderRadius: "10px" }}
           width="600"
           height="400"
-          controls
           poster="https://pic.amikara.com/2021-01-29-035212.png"
         >
           <source
@@ -59,6 +58,7 @@ const useStyles = makeStyles({
   container: {
     backgroundSize: "cover",
     backgroundRepeat: "no-repeat",
+    height: "calc(100vh - 60px)",
     display: "flex",
   },
   titleContainer: {

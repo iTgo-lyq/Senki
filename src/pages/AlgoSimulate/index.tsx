@@ -45,14 +45,13 @@ const useStyles = makeStyles({
     justifyContent: "space-between",
   },
   outContainer: {
-    minHeight: "calc(100vh - 60px)",
   },
   innerContainer: {
-    width: "70%",
+    width: "85%",
     margin: "0 auto",
   },
   algoBox: {
-    width: "48.5%",
+    width: "48%",
     marginTop: "25px",
   },
 });

@@ -218,7 +218,7 @@ function calculateInitialValues(node, level = 0, prevSibling = null) {
     node._layout.x = 0;
   }
 
-  if (node._leafs.length == 1) {
+  if (node._leafs.length === 1) {
     node._layout.modifier = node._layout.x;
   } else if (node._leafs.length >= 2) {
     let minY = Infinity;

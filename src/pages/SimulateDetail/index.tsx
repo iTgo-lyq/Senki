@@ -145,7 +145,6 @@ const useStyles = makeStyles({
     flex: 1,
     marginLeft: 50,
     marginRight: 50,
-    boxShadow: "0 2px 12px 0 rgba(0, 0, 0, 0.1)",
   },
   operationArea: {
     margin: 13,

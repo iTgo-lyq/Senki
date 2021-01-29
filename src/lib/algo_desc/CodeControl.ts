@@ -74,7 +74,7 @@ export default class CodeControl extends MicroEvent<CodeControlEvent> {
     super();
 
     CodeControlPool.push(this);
-    
+
     this.executableFunction = Function(`
     ${this._breakpointFunctionDeclaration}
     return async function () {

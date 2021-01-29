@@ -7,7 +7,7 @@ export class SenkiNode extends AnimPlayer {
 
   name?: string;
 
-  constructor(x = 0, y = 0);
+  constructor(x: number, y: number);
 
   render(api: { ctx: CanvasRenderingContext2D }): void;
 
@@ -39,9 +39,7 @@ export class Group extends SenkiNode {
 
   removeAllChild: () => void;
 
-  render(args) {
-    for (let n of this.children) n.render(args);
-  }
+  render(api: { ctx: CanvasRenderingContext2D }): void;
 
   setPositon: (x: number, y: number) => void;
 
@@ -62,7 +60,7 @@ export class Scene extends Group {
 
   constructor(canvas: HTMLCanvasElement);
 
-  render: () => void;
+  render(api: { ctx: CanvasRenderingContext2D }): void;
 
   onResize: () => void;
 

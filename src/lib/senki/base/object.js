@@ -15,7 +15,7 @@ export class SenkiNode extends AnimPlayer {
     this.registerAnimResponder("y", this.moveY);
   }
 
-  render() {}
+  render() { }
 
   setPositon(x, y) {
     this.position.x = x;
@@ -57,7 +57,7 @@ export class Group extends SenkiNode {
   removeChild(n) {
     if (!n instanceof SenkiNode) return;
     const idx = this.children.indexOf(n);
-    this.children.splice(idx, 1);
+    if (idx !== -1) this.children.splice(idx, 1);
   }
 
   removeAllChild() {

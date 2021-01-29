@@ -19,7 +19,8 @@ class MicroEvent<EventType extends string> {
   off(event: EventType, fct: (...args: any[]) => void) {
     this._events = this._events || {};
     if (event in this._events === false) return;
-    this._events[event].splice(this._events[event].indexOf(fct), 1);
+    let idx = this._events[event].indexOf(fct)
+    if (idx !== -1) this._events[event].splice(idx, 1);
   }
 
   emit(event: EventType, ...args: any[]) {
@@ -74,7 +75,7 @@ export default class CodeControl extends MicroEvent<CodeControlEvent> {
     super();
 
     CodeControlPool.push(this);
-    console.log(CodeControlPool)
+
     this.executableFunction = Function(`
     ${this._breakpointFunctionDeclaration}
     return async function () {

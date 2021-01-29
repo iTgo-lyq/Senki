@@ -15,7 +15,7 @@ type Props = {
 
 function CodeDesc({code, desc, info}: Props) {
   const c = useStyle();
-
+  console.log(document.getElementsByClassName("CodeMirror"))
   return (
     <div className={c.container}>
       <Drawer

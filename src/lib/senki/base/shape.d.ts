@@ -37,14 +37,14 @@ type CircleConfig = {
   radius: number;
   borderWidth: number;
   borderColor: string;
-  fillColo: string;
+  fillColor: string;
 };
 
 export class Circle extends SenkiNode {
   radius: number;
   borderWidth: number;
   borderColor: string;
-  fillColo: string;
+  fillColor: string;
 
   constructor(args: CircleConfig, x, y);
 }
@@ -86,7 +86,7 @@ export class Arrow extends SenkiNode {
   _updateCoord: () => void;
 }
 
-type SenkiText = {
+type SenkiTextConfig = {
   content: string;
   color: string;
   size: number;
@@ -101,7 +101,7 @@ export class SenkiText extends SenkiNode {
   family: string;
   opacity: number;
 
-  constructor(args, x, y);
+  constructor(args: SenkiTextConfig | string, x: number, y: number);
 
   changeO(
     timestamp: number,

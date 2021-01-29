@@ -46,6 +46,7 @@ export class Circle extends SenkiNode {
   borderWidth = 0;
   borderColor = "black";
   fillColor = "#546fc6";
+  opacity = 1
 
   constructor(args, x, y) {
     super(x, y);

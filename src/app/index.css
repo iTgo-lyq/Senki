@@ -23,19 +23,33 @@
     color:#d3d7da
 } */
 
-*::-webkit-scrollbar {
-  /*滚动条整体样式*/
-  width: 6px; /*高宽分别对应横竖滚动条的尺寸*/
+/* *::-webkit-scrollbar {
+  width: 6px; 
   height: 1px;
-  background-color: #F5F5F5;
+  background-color: #dbfffc;
 }
 *::-webkit-scrollbar-thumb {
-  /*滚动条里面小方块*/
   box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
-  background: #535353;
+  background: #1890ff;
 }
 *::-webkit-scrollbar-track {
-  /*滚动条里面轨道*/
   box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
-  background: #ededed;
+  background: #ffffff;
+} */
+
+
+.main{
+  position: relative;
+  min-height: 100%;
+  background:linear-gradient(rgb(232, 240, 255) 0%, rgb(255, 255, 255) 52.08%)
+}
+
+.container{
+  position: relative;
+  height: 100%;
+}
+.footer{
+  position: relative;
+  top: 100px;
+  bottom: 0;
 }

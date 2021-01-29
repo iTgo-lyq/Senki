@@ -1,6 +1,5 @@
-import { AnimProvider, AnimProviderConfig } from "../base/anim";
+import { AnimProviderConfig } from "../base/anim";
 import { Group, Scene } from "../base/object";
-import { Rect, SenkiText } from "../base/shape";
 
 type HistogramConfig = {
   /** 自动加入该Scene */

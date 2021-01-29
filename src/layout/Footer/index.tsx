@@ -14,9 +14,11 @@ export default Footer;
 const useStyles = makeStyles({
   container: {
     height: "50px",
-    backgroundColor: "#2c303a",
     color: "#d3d7da",
     lineHeight: "50px",
     textAlign: "center",
+    position: "relative",
+    top: '100%',
+    width:"100%"
   },
 });

@@ -1,12 +1,21 @@
 import { makeStyles } from "@material-ui/core/styles";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 const Header = () => {
   const classes = useStyles();
+  const location = useLocation();
+  console.log(location)
   return (
-    <div className={classes.headerContainer}>
+    <div
+      className={
+        classes.headerContainer +
+        " " +
+        (location.pathname === "/welcome" ? "" : classes.tabbarBC)
+      }
+    >
       <div className={classes.headerInnerContainer}>
-        <Link to="/welcome" className={classes.logoTitleBox}>
+        <NavLink to="/welcome" className={classes.logoTitleBox}>
           <div>
             <img
               className={classes.logoImg}
@@ -15,22 +24,57 @@ const Header = () => {
             />
           </div>
           <div
-            className={classes.logoTitle}
+            className={
+              classes.logoTitle +
+              " " +
+              (location.pathname === "/welcome" ? "" : classes.tabbarBC)
+            }
             style={{ fontFamily: "飞驰标题体" }}
           >
             Senki
           </div>
-        </Link>
+        </NavLink>
         <div className={classes.navItemBox}>
-          <Link to="/algosimulate" className={classes.navItem}>
+          <NavLink
+            to="/algosimulate"
+            isActive={(match, location) => {
+              console.log(match, location)                 
+              if(/\/algosimulate/.test(location.pathname)){
+                return true
+              }
+              return false
+            }}
+            activeStyle={{ color: "#407cc0" }}
+            className={
+              classes.navItem +
+              " " +
+              (location.pathname === "/welcome" ? "" : classes.tabbarBC)
+            }
+          >
             算法模拟
-          </Link>
-          <Link to="/visual-editor" className={classes.navItem}>
+          </NavLink>
+          <NavLink
+            to="/visual-editor"
+            activeStyle={{ color: "#407cc0" }}
+            className={
+              classes.navItem +
+              " " +
+              (location.pathname === "/welcome" ? "" : classes.tabbarBC)
+            }
+          >
             动手演练
-          </Link>
-          <Link to="" className={classes.navItem}>
-            Senki.JS文档
-          </Link>
+          </NavLink>
+          <NavLink
+            to="/about"
+            activeStyle={{ color: "#407cc0" }}
+            className={
+              classes.navItem +
+              " " +
+              (location.pathname === "/welcome" ? "" : classes.tabbarBC)
+            }
+          >
+            关于我们
+          </NavLink>
         </div>
       </div>
     </div>
@@ -42,10 +86,19 @@ export default Header;
 const useStyles = makeStyles({
   headerContainer: {
     height: "60px",
-    backgroundColor: "#2c303a",
+    width: "100%",
+    color: "rgb(13, 51, 128)",
+    transition: "all 0.2s",
+  },
+  tabbarBC: {
+    color: "white",
+    background: "#1c334c",
+  },
+  tabbar: {
+    color: "white",
   },
   headerInnerContainer: {
-    width: "70%",
+    width: "90%",
     margin: "0 auto",
     height: "60px",
     display: "flex",
@@ -66,8 +119,7 @@ const useStyles = makeStyles({
     height: "40px",
   },
   logoTitle: {
-    color: "white",
-    fontSize: "27px",
+    fontSize: "32px",
     marginLeft: "10px",
     paddingBottom: "5px",
     boxSizing: "border-box",
@@ -82,19 +134,24 @@ const useStyles = makeStyles({
   navItemBox: {
     display: "flex",
     alignItems: "center",
-    marginRight: "30px",
+    marginRight: "10px",
     height: "60px",
   },
   navItem: {
     "&:hover": {
       cursor: "pointer",
       color: "white",
-      borderBottom: "4px solid white",
+      textDecoration: "1px",
     },
-    color: "#d3d7da",
-    marginRight: "35px",
+    fontWeight: 600,
+    fontSize: "1rem",
+    marginRight: "40px",
     height: "60px",
     lineHeight: "60px",
-    borderBottom: "4px solid #d3d7da",
+    position: "relative",
+    "&::after": {},
   },
+  // activeStyle: {
+  //   color: ;
+  // }
 });

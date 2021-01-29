@@ -1,6 +1,5 @@
 import React, { useEffect, useLayoutEffect } from "react";
 import { makeStyles } from "@material-ui/core";
-import { Drawer } from "antd";
 import CodeMirror from "@uiw/react-codemirror";
 import "codemirror/theme/monokai.css";
 
@@ -42,15 +41,8 @@ function CodeDesc({code, desc, info}: Props) {
   
   return (
     <div className={c.container}>
-      <Drawer
-        width="450"
-        mask={false}
-        placement="left"
-        visible={true}
-        getContainer={false}
-        className={c.drawer}
-      >
-        <p className={c.desc}>点击控制区播放按钮，开始执行 {info.desc}  {info.line}</p>
+      <div className={c.drawer}>
+        <p className={c.desc}>点击控制区播放按钮，开始执行 <span className={c.info}>{info.desc}</span> <span className={c.line}>{info.line}</span></p>
         <CodeMirror
           value={code}
           options={{
@@ -59,7 +51,7 @@ function CodeDesc({code, desc, info}: Props) {
             readOnly: true
           }}
         />
-      </Drawer>
+      </div>
     </div>
   );
 }
@@ -71,14 +63,32 @@ const useStyle = makeStyles({
     display: "block",
     position: "relative",
     width: "35vw",
-    backgroundColor: "#A4B7D3",
     overflow: "hidden",
+    background: "rgba(0,0,0,0)"
   },
   desc: {
-    paddingLeft: 5,
+    textAlign: "center",
+    border: "1px solid #cfcfcd44",
+    padding: 5,
+    fontSize: 16,
+    background: "#f5f3f244"
   },
   drawer: {
     position: "absolute",
     overflow: "hidden",
+    height: "500px",
+    width: "500px",
+    padding: "20px",
+    background: "rgba(0,0,0,0)",
+    color: "#848891",
+    fontWeight: 300
   },
+  info:{
+    color: "#1c334c",
+    fontWeight: 500
+  },
+  line: {
+    color: "#1c334c",
+    fontWeight: 500
+  }
 });

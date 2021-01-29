@@ -13,15 +13,20 @@ import "antd/dist/antd.css";
 function App() {
   return (
     <Router>
-      <div>
+      <div className="main">
         <Header />
-        <Switch>
-          {routes.map((route, i) => (
-            <RouteWithSubRoutes key={i} {...route} />
-          ))}
-          <Redirect to="404" />
-        </Switch>
-        <Footer />
+        <div className="container">
+          <Switch>
+            {routes.map((route, i) => (
+              <RouteWithSubRoutes key={i} {...route} />
+            ))}
+            <Redirect to="404" />
+          </Switch>
+        </div>
+        <div className="footer">
+          <Footer />
+        </div>
+        
       </div>
     </Router>
   );

@@ -10,6 +10,7 @@ export default class SenkiArray extends Array {
   };
 
   scheduler = new Scheduler([
+    { num: 0, resolve: () => (this.senkiNode.speed = 400) },
     { num: 4, resolve: () => (this.senkiNode.speed = 300) },
     { num: 10, resolve: () => (this.senkiNode.speed = 200) },
     { num: 20, resolve: () => (this.senkiNode.speed = 100) },
@@ -61,7 +62,7 @@ export default class SenkiArray extends Array {
   }
 
   add(idx, v) {
-    if (idx < 0 || idx > this.length)
+    if (idx < 0 || idx >= this.length)
       return console.warn("a out-of-bounds index in this array.");
     if (isNaN(v)) return console.warn("can't add a non-numeric value.");
 
@@ -73,7 +74,7 @@ export default class SenkiArray extends Array {
   }
 
   remove(idx) {
-    if (idx < 0 || idx > this.length)
+    if (idx < 0 || idx >= this.length)
       return console.warn("a out-of-bounds index in this array.");
 
     this.addJob((next) => this.senkiNode.out(idx, next));
@@ -84,7 +85,7 @@ export default class SenkiArray extends Array {
   }
 
   set(idx, v) {
-    if (idx < 0 || idx > this.length)
+    if (idx < 0 || idx >= this.length)
       return console.warn("a out-of-bounds index in this array.");
     if (isNaN(v)) return console.warn("can't add a non-numeric value.");
 
@@ -93,7 +94,7 @@ export default class SenkiArray extends Array {
   }
 
   swap(idx1, idx2) {
-    if (idx1 < 0 || idx1 > this.length || idx2 < 0 || idx2 > this.length)
+    if (idx1 < 0 || idx1 >= this.length || idx2 < 0 || idx2 >= this.length)
       return console.warn("a out-of-bounds index in this array.");
 
     this.addJob((next) => this.senkiNode.swap(idx1, idx2, next));
@@ -108,20 +109,12 @@ export default class SenkiArray extends Array {
     if (!/^#([0-9a-fA-F]{6})$/.test(color))
       return console.warn("please provide a color value like #aabbcc.");
 
-    let resRef = {
-      value: undefined,
-      caller: undefined,
-      set(fn) {
-        if (this.caller) fn();
-        else this.value = fn;
-      },
-    };
+    let retFn;
 
-    this.addJob((next) => resRef.set(this.senkiNode.flag(idx, color, next)));
+    this.addJob((next) => retFn = this.senkiNode.flag(idx, color, next));
 
     return () => {
-      if (resRef.value) resRef.value();
-      else resRef.caller = true;
+      this.addJob((next) => { retFn(); next() });
     };
   }
 

@@ -24,7 +24,7 @@ export function dateFormat(fmt: string, timestamp: number | string | Date): stri
 
   let date = timestamp instanceof Date ? timestamp : new Date(Number(timestamp));
 
-  if (date.toString() == "Invalid Date") throw "err timestamp";
+  if (date.toString() === "Invalid Date") throw Error("err timestamp") ;
 
   const opt = {
     "Y+": date.getFullYear().toString(), // 年
@@ -42,7 +42,7 @@ export function dateFormat(fmt: string, timestamp: number | string | Date): stri
     if (ret) {
       fmt = fmt.replace(
         ret[1],
-        ret[1].length == 1 ? (opt as any)[k] : (opt as any)[k].padStart(ret[1].length, "0")
+        ret[1].length === 1 ? (opt as any)[k] : (opt as any)[k].padStart(ret[1].length, "0")
       );
     }
   })

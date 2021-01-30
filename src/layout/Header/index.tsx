@@ -13,11 +13,11 @@ const Header = () => {
   return (
     <div className={C(classes.headerContainer, showTabbarBC)}>
       <div className={classes.headerInnerContainer}>
-        <NavLink to="/welcome" className={classes.logoTitleBox}>
+        <NavLink to="/" className={classes.logoTitleBox}>
           <div>
             <img
               className={classes.logoImg}
-              src="https://k-1258976754.cos.ap-shanghai.myqcloud.com/senki/logo-white.png"
+              src={`https://k-1258976754.cos.ap-shanghai.myqcloud.com/senki/logo-${isIndex ?'blue': 'white'}.png`}
               alt=""
             />
           </div>
@@ -54,7 +54,7 @@ const Header = () => {
             activeStyle={{ color: "#407cc0" }}
             className={C(classes.navItem, showTabbarBC)}
           >
-            关于我们
+            Senki.js文档
           </NavLink>
         </div>
       </div>
@@ -89,11 +89,7 @@ const useStyles = makeStyles({
   logoImg: {
     width: "40px",
     height: "40px",
-    transition: "all 0.5s",
-    "&:hover": {
-      transform: "rotate(360deg)",
-      cursor: "pointer",
-    },
+    transition: "all 0.5s"
   },
   logoImgBox: {
     width: "40px",

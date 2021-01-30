@@ -5,12 +5,13 @@ import { useLocation } from "react-router-dom";
 const Header = () => {
   const classes = useStyles();
   const location = useLocation();
+  const isIndex =  location.pathname === "/welcome" || location.pathname === '/'
   return (
     <div
       className={
         classes.headerContainer +
         " " +
-        (location.pathname === "/welcome" || '/' ? "" : classes.tabbarBC)
+        (isIndex ? "" : classes.tabbarBC)
       }
     >
       <div className={classes.headerInnerContainer}>
@@ -26,7 +27,7 @@ const Header = () => {
             className={
               classes.logoTitle +
               " " +
-              (location.pathname === "/welcome"  || '/'  ? "" : classes.tabbar)
+              (isIndex  ? "" : classes.tabbar)
             }
             style={{ fontFamily: "飞驰标题体" }}
           >
@@ -47,7 +48,7 @@ const Header = () => {
             className={
               classes.navItem +
               " " +
-              (location.pathname === "/welcome"  || '/' ? "" : classes.tabbar)
+              (isIndex ? "" : classes.tabbar)
             }
           >
             算法模拟
@@ -58,7 +59,7 @@ const Header = () => {
             className={
               classes.navItem +
               " " +
-              (location.pathname === "/welcome"  || '/' ? "" : classes.tabbar)
+              (isIndex ? "" : classes.tabbar)
             }
           >
             动手演练
@@ -69,7 +70,7 @@ const Header = () => {
             className={
               classes.navItem +
               " " +
-              (location.pathname === "/welcome"  || '/' ? "" : classes.tabbar)
+              (isIndex ? "" : classes.tabbar)
             }
           >
             Senki.js文档

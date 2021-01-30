@@ -31,6 +31,7 @@ function Welcome() {
           style={{ borderRadius: "10px" }}
           width="600"
           height="400"
+          controls
           poster="https://pic.amikara.com/2021-01-29-035212.png"
         >
           <source

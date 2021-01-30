@@ -5,7 +5,6 @@ import { useLocation } from "react-router-dom";
 const Header = () => {
   const classes = useStyles();
   const location = useLocation();
-  console.log(location)
   return (
     <div
       className={
@@ -73,7 +72,7 @@ const Header = () => {
               (location.pathname === "/welcome" ? "" : classes.tabbarBC)
             }
           >
-            关于我们
+            Senki.js文档
           </NavLink>
         </div>
       </div>
@@ -108,11 +107,7 @@ const useStyles = makeStyles({
   logoImg: {
     width: "40px",
     height: "40px",
-    transition: "all 0.5s",
-    "&:hover": {
-      transform: "rotate(360deg)",
-      cursor: "pointer",
-    },
+    transition: "all 0.5s"
   },
   logoImgBox: {
     width: "40px",

@@ -11,10 +11,12 @@ import {
   CodeControl,
   makeBubbleAlgoSource,
 } from "../../lib/algo_desc";
+import makeSelectionAlgoSource from "../../lib/algo_desc/sort/selection";
 
 let scene: Scene;
 let codeControl: CodeControl;
-let [fakeCode, desc, realCode] = makeBubbleAlgoSource();
+// let [fakeCode, desc, realCode] = makeBubbleAlgoSource();
+let [fakeCode, desc, realCode] = makeSelectionAlgoSource();
 
 let tempTask: () => void | undefined; // 保存断点继续的执行函数
 
@@ -24,7 +26,7 @@ const SimulateDetail = () => {
 
   const [data] = useState<[]>()
   const [status, setStatus] = useState<"stop" | "play" | "finish">("stop");
-  const [codeInfo, setCodeInfo] = useState({ line: -1, desc: -1 }); // TODO  利用line高亮对应代码行
+  const [codeInfo, setCodeInfo] = useState({ line: [-1,-1], desc: -1 }); // TODO  利用line高亮对应代码行
 
   const statusRef = useRef(status);
   statusRef.current = status; // 没办法，为了在闭包函数里引用，只能干这种愚蠢操作。
@@ -49,7 +51,7 @@ const SimulateDetail = () => {
 
     const handleEnd = () => {
       setStatus("finish");
-      setCodeInfo({ line: -1, desc: -1 });
+      setCodeInfo({ line: [-1,-1], desc: -1 });
     };
 
     const handleDestroy = () => {
@@ -69,7 +71,7 @@ const SimulateDetail = () => {
   };
 
   const handleRestart = () => {
-    [fakeCode, desc, realCode] = makeBubbleAlgoSource(data);
+    [fakeCode, desc, realCode] = makeSelectionAlgoSource(data);
     codeControl.destroy(); // 一定要记得销毁
     createNewCodeControl();
     setStatus("play");

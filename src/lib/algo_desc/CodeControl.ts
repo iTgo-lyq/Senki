@@ -35,7 +35,7 @@ const CodeControlPool: CodeControl[] = [];
 
 type CodeControlEvent = "end" | "begin" | "wait" | "error" | "destroy";
 
-type CodeInfo = { line: number; desc: number };
+type CodeInfo = { line: number[]; desc: number };
 
 export type CodeContext = {
   info: CodeInfo;

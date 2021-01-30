@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useLayoutEffect } from "react";
 import { makeStyles } from "@material-ui/core";
 import CodeMirror from "@uiw/react-codemirror";
 import "codemirror/theme/monokai.css";
@@ -7,14 +7,38 @@ type Props = {
   code: string;
   desc: string[];
   info: {
-    line: number;
+    line: number[];
     desc: number;
   };
 };
 
 function CodeDesc({code, desc, info}: Props) {
   const c = useStyle();
-
+    
+    useLayoutEffect(()=>{
+      setTimeout(() => {
+        for(let i = info.line[0]; i <= info.line[1]; i++ ) {
+          if(info.line[0]!==-1) {
+            console.log(1)
+            if(document.getElementsByClassName('CodeMirror-code')[0].children[i] as HTMLDivElement !== undefined) {
+              console.log("haha");
+              console.log((document.getElementsByClassName('CodeMirror-code')[0].children[i] as HTMLDivElement).style);
+              (document.getElementsByClassName('CodeMirror-code')[0].children[i] as HTMLElement).style.backgroundColor="red";
+            }
+    console.log(2)
+          }
+        }
+      }, 1000);
+      
+    })
+  useEffect(()=>{
+    
+  },[])
+  // for(let i=0;i<document.getElementsByClassName('CodeMirror-code')[0].childNodes.length;i++) {
+  //   if(info.line[0])
+  // }
+  // document.getElementsByClassName('CodeMirror-code')[0].childNodes
+  
   return (
     <div className={c.container}>
       <div className={c.drawer}>

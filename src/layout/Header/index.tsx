@@ -10,7 +10,7 @@ const Header = () => {
       className={
         classes.headerContainer +
         " " +
-        (location.pathname === "/welcome" ? "" : classes.tabbarBC)
+        (location.pathname === "/welcome" || '/' ? "" : classes.tabbarBC)
       }
     >
       <div className={classes.headerInnerContainer}>
@@ -26,7 +26,7 @@ const Header = () => {
             className={
               classes.logoTitle +
               " " +
-              (location.pathname === "/welcome" ? "" : classes.tabbarBC)
+              (location.pathname === "/welcome"  || '/'  ? "" : classes.tabbar)
             }
             style={{ fontFamily: "飞驰标题体" }}
           >
@@ -47,7 +47,7 @@ const Header = () => {
             className={
               classes.navItem +
               " " +
-              (location.pathname === "/welcome" ? "" : classes.tabbarBC)
+              (location.pathname === "/welcome"  || '/' ? "" : classes.tabbar)
             }
           >
             算法模拟
@@ -58,7 +58,7 @@ const Header = () => {
             className={
               classes.navItem +
               " " +
-              (location.pathname === "/welcome" ? "" : classes.tabbarBC)
+              (location.pathname === "/welcome"  || '/' ? "" : classes.tabbar)
             }
           >
             动手演练
@@ -69,7 +69,7 @@ const Header = () => {
             className={
               classes.navItem +
               " " +
-              (location.pathname === "/welcome" ? "" : classes.tabbarBC)
+              (location.pathname === "/welcome"  || '/' ? "" : classes.tabbar)
             }
           >
             Senki.js文档

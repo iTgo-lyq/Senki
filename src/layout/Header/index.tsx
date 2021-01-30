@@ -5,7 +5,7 @@ import { useLocation } from "react-router-dom";
 const Header = () => {
   const classes = useStyles();
   const location = useLocation();
-  const isIndex =  location.pathname === "/welcome" || location.pathname === '/'
+  const isIndex = location.pathname === '/'
   return (
     <div
       className={
@@ -15,7 +15,7 @@ const Header = () => {
       }
     >
       <div className={classes.headerInnerContainer}>
-        <NavLink to="/welcome" className={classes.logoTitleBox}>
+        <NavLink to="/" className={classes.logoTitleBox}>
           <div>
             <img
               className={classes.logoImg}

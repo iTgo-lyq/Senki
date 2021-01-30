@@ -19,10 +19,6 @@ export const routes: RouteItem[] = [
     component: Welcome,
   },
   {
-    path: "/welcome",
-    component: Welcome,
-  },
-  {
     path: "/algosimulate",
     component: AlgoSimulate,
   },

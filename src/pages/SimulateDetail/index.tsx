@@ -10,14 +10,21 @@ import {
   CodeContext,
   CodeControl,
   makeBubbleAlgoSource,
+  makeMergeAlgoSource,
+  makeQuickSortAlgoSource,
+  makeSelectionAlgoSource,
+  makeShellAlgoSource,
 } from "../../lib/algo_desc";
-import makeSelectionAlgoSource from "../../lib/algo_desc/sort/selection";
-import { Link } from "react-router-dom";
+import { Link,useLocation } from "react-router-dom";
+import BreadcrumbNav from "./BreadcrumbNav";
+
 
 let scene: Scene;
 let codeControl: CodeControl;
-// let [fakeCode, desc, realCode] = makeBubbleAlgoSource();
-let [fakeCode, desc, realCode] = makeSelectionAlgoSource();
+let makeAlgoSource = makeBubbleAlgoSource;
+let fakeCode: string = "",
+  desc: string[] = [],
+  realCode: string = "";
 
 let tempTask: () => void | undefined; // 保存断点继续的执行函数
 
@@ -25,9 +32,10 @@ const SimulateDetail = () => {
   const classes = useStyles();
   const { flexRow, flexCol } = useNormalStyles();
   const [reviseArray, setReviseArray] = useState([]);
+  const location = useLocation();
   const [data] = useState<[]>();
   const [status, setStatus] = useState<"stop" | "play" | "finish">("stop");
-  const [codeInfo, setCodeInfo] = useState({ line: [-1, -1], desc: -1 }); // TODO  利用line高亮对应代码行
+  const [codeInfo, setCodeInfo] = useState({ line: [-1, -1], desc: -1 });
 
   const statusRef = useRef(status);
   statusRef.current = status; // 没办法，为了在闭包函数里引用，只能干这种愚蠢操作。
@@ -72,7 +80,7 @@ const SimulateDetail = () => {
   };
 
   const handleRestart = () => {
-    [fakeCode, desc, realCode] = makeSelectionAlgoSource(data);
+    [fakeCode, desc, realCode] = makeAlgoSource(data);
     codeControl.destroy(); // 一定要记得销毁
     createNewCodeControl();
     setStatus("play");
@@ -94,26 +102,28 @@ const SimulateDetail = () => {
     SenkiArray.config.scene = scene;
     SenkiArray.config.width = scene.width;
     SenkiArray.config.height = scene.height;
+
+    let path = location.pathname;
+
+    if (/bubble/.test(path)) makeAlgoSource = makeBubbleAlgoSource;
+    if (/merge/.test(path)) makeAlgoSource = makeMergeAlgoSource;
+    if (/quick/.test(path)) makeAlgoSource = makeQuickSortAlgoSource;
+    if (/selection/.test(path)) makeAlgoSource = makeSelectionAlgoSource;
+    if (/shell/.test(path)) makeAlgoSource = makeShellAlgoSource;
+
+    [fakeCode, desc, realCode] = makeAlgoSource(data);
+
     createNewCodeControl();
   }, [canvas]);
 
   return (
-    <div className={C([classes.container, flexCol])}>
-      <Breadcrumb className={classes.breadNav}>
-        <Breadcrumb.Item href="/">
-          <HomeOutlined />
-        </Breadcrumb.Item>
-        <Breadcrumb.Item href="/algosimulate">
-          <UserOutlined />
-          <span>算法模拟</span>
-        </Breadcrumb.Item>
-        <Breadcrumb.Item>模拟详情</Breadcrumb.Item>
-      </Breadcrumb>
-      <div className={C([classes.codeBox, flexRow])}>
+    <div className={C(classes.container, flexCol)}>
+      <BreadcrumbNav />
+      <div className={C(classes.codeBox, flexRow)}>
         <CodeDesc code={fakeCode} desc={desc} info={codeInfo} />
         <canvas ref={canvas} className={classes.canvas}></canvas>
       </div>
-      <div className={C([classes.operationArea, flexCol])}>
+      <div className={C(classes.operationArea, flexCol)}>
         <div className={flexRow}>
           <div className={classes.operationSingleArea}>
             <div className={classes.operationPart}>

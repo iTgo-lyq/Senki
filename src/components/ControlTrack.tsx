@@ -27,7 +27,7 @@ const ControlTrack = (props: Props) => {
   const classes = useStyles();
 
   return (
-    <div className={C([classes.controlTrack, className])}>
+    <div className={C(classes.controlTrack, className)}>
       <div className={classes.speedContainer}>
         <span>Speed</span>
         <div className={classes.speedSlider}>

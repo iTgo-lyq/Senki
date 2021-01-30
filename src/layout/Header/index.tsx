@@ -1,19 +1,17 @@
 import { makeStyles } from "@material-ui/core/styles";
 import { NavLink } from "react-router-dom";
 import { useLocation } from "react-router-dom";
+import { C } from "../../util";
 
 const Header = () => {
   const classes = useStyles();
   const location = useLocation();
-  console.log(location)
+
+  const showTabbarBC =
+    !/^.{0}$|^\/$|welcome/.test(location.pathname) && classes.tabbarBC;
+
   return (
-    <div
-      className={
-        classes.headerContainer +
-        " " +
-        (location.pathname === "/welcome" ? "" : classes.tabbarBC)
-      }
-    >
+    <div className={C(classes.headerContainer, showTabbarBC)}>
       <div className={classes.headerInnerContainer}>
         <NavLink to="/welcome" className={classes.logoTitleBox}>
           <div>
@@ -24,11 +22,7 @@ const Header = () => {
             />
           </div>
           <div
-            className={
-              classes.logoTitle +
-              " " +
-              (location.pathname === "/welcome" ? "" : classes.tabbarBC)
-            }
+            className={C(classes.logoTitle, showTabbarBC)}
             style={{ fontFamily: "飞驰标题体" }}
           >
             Senki
@@ -38,40 +32,27 @@ const Header = () => {
           <NavLink
             to="/algosimulate"
             isActive={(match, location) => {
-              console.log(match, location)                 
-              if(/\/algosimulate/.test(location.pathname)){
-                return true
+              if (/\/algosimulate/.test(location.pathname)) {
+                return true;
               }
-              return false
+              return false;
             }}
             activeStyle={{ color: "#407cc0" }}
-            className={
-              classes.navItem +
-              " " +
-              (location.pathname === "/welcome" ? "" : classes.tabbarBC)
-            }
+            className={C(classes.navItem, showTabbarBC)}
           >
             算法模拟
           </NavLink>
           <NavLink
             to="/visual-editor"
             activeStyle={{ color: "#407cc0" }}
-            className={
-              classes.navItem +
-              " " +
-              (location.pathname === "/welcome" ? "" : classes.tabbarBC)
-            }
+            className={C(classes.navItem, showTabbarBC)}
           >
             动手演练
           </NavLink>
           <NavLink
             to="/about"
             activeStyle={{ color: "#407cc0" }}
-            className={
-              classes.navItem +
-              " " +
-              (location.pathname === "/welcome" ? "" : classes.tabbarBC)
-            }
+            className={C(classes.navItem, showTabbarBC)}
           >
             关于我们
           </NavLink>

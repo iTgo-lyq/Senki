@@ -19,13 +19,10 @@ function CodeDesc({code, desc, info}: Props) {
       setTimeout(() => {
         for(let i = info.line[0]; i <= info.line[1]; i++ ) {
           if(info.line[0]!==-1) {
-            console.log(1)
             if(document.getElementsByClassName('CodeMirror-code')[0].children[i] as HTMLDivElement !== undefined) {
-              console.log("haha");
-              console.log((document.getElementsByClassName('CodeMirror-code')[0].children[i] as HTMLDivElement).style);
+              // console.log((document.getElementsByClassName('CodeMirror-code')[0].children[i] as HTMLDivElement).style);
               (document.getElementsByClassName('CodeMirror-code')[0].children[i] as HTMLElement).style.backgroundColor="red";
             }
-    console.log(2)
           }
         }
       }, 1000);

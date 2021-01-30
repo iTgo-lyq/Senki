@@ -1,6 +1,6 @@
 import React, { useLayoutEffect, useRef, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Breadcrumb } from "antd";
+import { Breadcrumb, Tag, Input, Button } from "antd";
 import { HomeOutlined, UserOutlined } from "@ant-design/icons";
 import { ControlTrack, useNormalStyles } from "../../components";
 import { C } from "../../util";
@@ -12,6 +12,7 @@ import {
   makeBubbleAlgoSource,
 } from "../../lib/algo_desc";
 import makeSelectionAlgoSource from "../../lib/algo_desc/sort/selection";
+import { Link } from "react-router-dom";
 
 let scene: Scene;
 let codeControl: CodeControl;
@@ -23,10 +24,10 @@ let tempTask: () => void | undefined; // 保存断点继续的执行函数
 const SimulateDetail = () => {
   const classes = useStyles();
   const { flexRow, flexCol } = useNormalStyles();
-
-  const [data] = useState<[]>()
+  const [reviseArray, setReviseArray] = useState([]);
+  const [data] = useState<[]>();
   const [status, setStatus] = useState<"stop" | "play" | "finish">("stop");
-  const [codeInfo, setCodeInfo] = useState({ line: [-1,-1], desc: -1 }); // TODO  利用line高亮对应代码行
+  const [codeInfo, setCodeInfo] = useState({ line: [-1, -1], desc: -1 }); // TODO  利用line高亮对应代码行
 
   const statusRef = useRef(status);
   statusRef.current = status; // 没办法，为了在闭包函数里引用，只能干这种愚蠢操作。
@@ -51,7 +52,7 @@ const SimulateDetail = () => {
 
     const handleEnd = () => {
       setStatus("finish");
-      setCodeInfo({ line: [-1,-1], desc: -1 });
+      setCodeInfo({ line: [-1, -1], desc: -1 });
     };
 
     const handleDestroy = () => {
@@ -83,6 +84,11 @@ const SimulateDetail = () => {
 
   const handleChangeSpeed = () => {};
 
+  const reviseArrayInputChange = (event: any) => {
+    // let reviseString = event.target.defaultValue;
+    console.log(event.target.defaultValue);
+  };
+
   useLayoutEffect(() => {
     scene = new Scene(canvas.current!);
     SenkiArray.config.scene = scene;
@@ -111,11 +117,51 @@ const SimulateDetail = () => {
         <div className={flexRow}>
           <div className={classes.operationSingleArea}>
             <div className={classes.operationPart}>
-              一些列表，切换使用的算法
+              <Link to="/welcome">
+                <Tag color="magenta">冒泡</Tag>
+              </Link>
+              <Link to="/welcome">
+                <Tag color="cyan">选择</Tag>
+              </Link>
+              <Link to="/welcome">
+                <Tag color="geekblue">堆排序</Tag>
+              </Link>
+              <Link to="/welcome">
+                <Tag color="purple">快排</Tag>
+              </Link>
+              <Link to="/welcome">
+                <Tag color="green">归并</Tag>
+              </Link>
+              <Link to="/welcome">
+                <Tag color="blue">希尔</Tag>
+              </Link>
+              <Link to="/welcome">
+                <Tag color="purple">快排</Tag>
+              </Link>
+              <Link to="/welcome">
+                <Tag color="green">归并</Tag>
+              </Link>
+              <Link to="/welcome">
+                <Tag color="blue">希尔</Tag>
+              </Link>
             </div>
           </div>
           <div className={classes.operationSingleArea}>
-            <div className={classes.operationPart}>数组操作</div>
+            <div className={classes.operationPart}>
+              <div className={classes.reviseArrayInputButtonBox}>
+                <div className={classes.reviseArrayInput}>
+                  <Input
+                    placeholder="输入数组，例：[1,2,3,4,5]"
+                    onChange={(event) => {
+                      reviseArrayInputChange(event);
+                    }}
+                  />
+                </div>
+                <div>
+                  <Button>确认</Button>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
         <ControlTrack
@@ -154,10 +200,12 @@ const useStyles = makeStyles({
     backgroundColor: "#2c303a",
   },
   operationPart: {
-    height: "47%",
+    // height: "47%",
     marginTop: "1%",
     marginBottom: "1%",
     backgroundColor: "white",
+    padding: "20px",
+    borderRadius: "5px",
   },
   operationSingleArea: {
     width: "48%",
@@ -168,5 +216,13 @@ const useStyles = makeStyles({
     backgroundColor: "white",
     height: "100%",
     width: "100%",
+  },
+  reviseArrayInputButtonBox: {
+    display: "flex",
+    alignItems: "center",
+  },
+  reviseArrayInput: {
+    width: "90%",
+    marginRight: "5px",
   },
 });

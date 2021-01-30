@@ -1,5 +1,5 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles, Theme } from "@material-ui/core/styles";
 import { Slider } from "antd";
 import {
   StepBackwardOutlined,
@@ -15,6 +15,7 @@ import { C } from "../util";
 type Props = {
   status: "stop" | "play" | "finish";
   speed: number;
+  light?: boolean;
   className?: string;
   onPlay?: () => void;
   onStop?: () => void;
@@ -23,13 +24,13 @@ type Props = {
 };
 
 const ControlTrack = (props: Props) => {
-  const { className, speed, status } = props;
-  const classes = useStyles();
+  const { className, speed, status, light = false } = props;
+  const classes = useStyles({ light });
 
   return (
     <div className={C(classes.controlTrack, className)}>
       <div className={classes.speedContainer}>
-        <span>Speed</span>
+        <span className={classes.speedTitle}>Speed</span>
         <div className={classes.speedSlider}>
           <Slider
             defaultValue={speed || 400}
@@ -61,10 +62,10 @@ const ControlTrack = (props: Props) => {
 
 export default ControlTrack;
 
-const useStyles = makeStyles({
+const useStyles = makeStyles<Theme, { light: boolean }>({
   controlTrack: {
     height: 60,
-    backgroundColor: "#2c303a",
+    backgroundColor: ({ light }) => (light ? "tranparent" : "#2c303a"),
     width: "100%",
     display: "flex",
     alignItems: "center",
@@ -83,8 +84,11 @@ const useStyles = makeStyles({
     width: "70%",
     marginLeft: "10px",
   },
+  speedTitle: {
+    color: ({ light }) => (light ? "#aeb4b7" : "white"),
+  },
   icon: {
-    color: "white",
+    color: ({ light }) => (light ? "#3f51b5" : "white"),
     fontSize: "27px",
     marginRight: "20px",
     "&:hover": {

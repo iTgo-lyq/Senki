@@ -1,15 +1,13 @@
-module.exports = function ({ types: t }) {
-  const findLine = (function () {
-    return (path, node) => {
-      if (node && node.loc) return [node.loc.start.line, node.loc.end.line];
+export default function ({ types: t }) {
+  const findLine = (path, node) => {
+    if (node && node.loc) return [node.loc.start.line, node.loc.end.line];
 
-      if (!path) return -1;
+    if (!path) return -1;
 
-      if (path.node.loc)
-        return [path.node.loc.start.line, path.node.loc.end.line];
-      else return findLine(path.parentPath);
-    };
-  })();
+    if (path.node.loc)
+      return [path.node.loc.start.line, path.node.loc.end.line];
+    else return findLine(path.parentPath);
+  };
 
   const createWaitNode = ([lineStart = -1, lineEnd = -1], descNum = -1) => {
     return t.awaitExpression(
@@ -101,6 +99,10 @@ module.exports = function ({ types: t }) {
       Function(path) {
         path.node.async = true;
       },
+      CallExpression(path) {
+        if (!t.isAwaitExpression(path.parentPath.node))
+          path.replaceWith(t.awaitExpression(path.node))
+      }
     },
   };
 };

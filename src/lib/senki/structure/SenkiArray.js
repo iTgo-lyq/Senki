@@ -124,5 +124,11 @@ export default class SenkiArray extends Array {
     });
   }
 
+  destory() {
+    this.addJob((next) => {
+      this.senkiNode.destory(next);
+    });
+  }
+
   addJob = this.scheduler.push;
 }

@@ -10,7 +10,7 @@ export default class Histogram extends Group {
   space = 5;
   minItemWidth = 5;
   maxItemWidth = 50;
-  textMarginButtom = 10;
+  textMarginButtom = 5;
 
   cell = {
     maxV: 0,
@@ -25,15 +25,37 @@ export default class Histogram extends Group {
   speed = 400;
 
   animCounter = 0;
-  onStopAnim = () => {};
+  onStopAnim = () => { };
 
   constructor(data, args, x, y) {
     super(x, y);
-    
+
     Object.assign(this, args);
 
-    if (this.scene) this.scene.add(this)
     this.height -= 50
+
+    if (this.scene) {
+      this.scene.add(this)
+      let count = 0
+      for (let node of this.scene.children) {
+        if (node instanceof Histogram) {
+          count++;
+        }
+      }
+      let reducerCount = count;
+      for (let i = 0; i < this.scene.children.length; i++) {
+        const node = this.scene.children[i];
+        if (node instanceof Histogram) {
+          node.height = (this.scene.height - 50) / count
+          node.setPositon(node.position.x, this.scene.height - this.scene.height / count * reducerCount)
+          if (node !== this) {
+            node.updateCellProfile();
+            node.autoCreateMoveAnimation();
+          }
+          reducerCount--;
+        }
+      }
+    }
 
     this.updateCellProfile("init", 0, data);
   }
@@ -228,6 +250,31 @@ export default class Histogram extends Group {
 
     this.updateCellProfile();
     this.autoCreateMoveAnimation();
+  }
+
+  destory(onFinished) {
+    if (this.scene) {
+      this.scene.removeChild(this)
+      let count = 0
+      for (let node of this.scene.children) {
+        if (node instanceof Histogram) {
+          count++;
+        }
+      }
+      let reducerCount = count;
+      for (let i = 0; i < this.scene.children.length; i++) {
+        const node = this.scene.children[i];
+        if (node instanceof Histogram) {
+          node.height = (this.scene.height - 50) / count
+          node.setPositon(node.position.x, this.scene.height - this.scene.height / count * reducerCount)
+          node.updateCellProfile();
+          node.autoCreateMoveAnimation();
+          console.log(node)
+          reducerCount--;
+        }
+      }
+    }
+    onFinished();
   }
 
   updateCellProfile(flag, idx, v) {

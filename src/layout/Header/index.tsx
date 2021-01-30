@@ -19,7 +19,7 @@ const Header = () => {
           <div>
             <img
               className={classes.logoImg}
-              src="https://k-1258976754.cos.ap-shanghai.myqcloud.com/senki/logo-white.png"
+              src={`https://k-1258976754.cos.ap-shanghai.myqcloud.com/senki/logo-${isIndex ?'blue': 'white'}.png`}
               alt=""
             />
           </div>

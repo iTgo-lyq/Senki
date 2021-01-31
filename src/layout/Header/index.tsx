@@ -50,7 +50,7 @@ const Header = () => {
             动手演练
           </NavLink>
           <NavLink
-            to="/about"
+            to="https://github.com/Tgo-zzz/Senki#senkijs"
             activeStyle={{ color: "#407cc0" }}
             className={C(classes.navItem, showTabbarBC)}
           >

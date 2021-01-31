@@ -269,7 +269,6 @@ export default class Histogram extends Group {
           node.setPositon(node.position.x, this.scene.height - this.scene.height / count * reducerCount)
           node.updateCellProfile();
           node.autoCreateMoveAnimation();
-          console.log(node)
           reducerCount--;
         }
       }

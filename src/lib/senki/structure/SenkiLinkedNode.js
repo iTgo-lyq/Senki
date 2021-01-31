@@ -17,6 +17,10 @@ class SenkiLinkedNode {
     fillColor: "#ffffff",
   }
 
+  static resetSenkiForest() {
+    this.senkiForest = new ForestPlot();
+  }
+
   static setCanvasDimensions(obj) {
     SenkiLinkedNode.scheduler.push((next) => {
       SenkiLinkedNode.senkiForest.setDimensions(obj, next)
@@ -37,6 +41,14 @@ class SenkiLinkedNode {
     SenkiLinkedNode.scheduler.push((next) => {
       this.identify = SenkiLinkedNode.senkiForest.addTree(this._senkiLeaf, next)
     })
+  }
+
+  setKey(v) {
+    this.key = v;
+    SenkiLinkedNode.scheduler.push((next) => {
+      this._senkiLeaf.setKey(v)
+      next();
+    });
   }
 
   flag(color) {
@@ -102,7 +114,7 @@ class SenkiLinkedNode {
     this._parent = newP
     let oldIdx;
     if (oldP) oldIdx = oldP._childs.indexOf(this)
-    if (oldP && oldIdx) oldP._childs.splice(oldIdx, 1)
+    if (oldP && oldIdx !== -1) oldP._childs.splice(oldIdx, 1)
     // 修改图形数据结构
     SenkiLinkedNode.scheduler.push((next) => {
       SenkiLinkedNode.senkiForest
@@ -122,21 +134,21 @@ class SenkiLinkedNode {
   /** 加入到第一个节点 */
   set left(n) {
     if (this._existClosedLoop(n)) return;
-
+    if (!n) return this.removeChild(this._left);
     this.addChild(n, 0)
     this._left = n
   }
 
   /** 返回上次设置为 left 的节点 */
   get left() {
-    return this._childs[0];
+    return this._left;
   }
 
   /** 加入到最后一个节点 */
   set right(n) {
     if (this._existClosedLoop(n)) return;
-
-    this.addChild(n, this._childs.length - 1)
+    if (!n) return this.removeChild(this._right);
+    this.addChild(n, this._childs.length)
     this._right = n
   }
 

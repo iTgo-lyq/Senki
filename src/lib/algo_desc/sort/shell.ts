@@ -17,7 +17,7 @@ for (let gap = splitHalf(arr.length); gap > 0; gap = splitHalf(gap)) {
 `;
 
 const desc = [
-  "初始化数组",
+  "【希尔排序】初始化数组",
   "定义折半函数",
   "逐步降低步长直至为1为止",
   "与插入排序的写法基本一致",

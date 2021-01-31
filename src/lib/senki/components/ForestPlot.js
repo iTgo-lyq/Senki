@@ -108,6 +108,11 @@ export class LeafNode extends HierarchyNode {
     this.add(new SenkiText({ content: this.key, color: this.textColor }, 0, -7));
   }
 
+  setKey(key) {
+    this.key = key
+    this.children[1].content = key
+  }
+
   flag(color, onFinish) {
     let oldColor = this.borderColor
 
@@ -121,27 +126,12 @@ export class LeafNode extends HierarchyNode {
       this.children[0].borderColor = oldColor
     }
   }
-
-  render({ ctx }) {
-    for (const leaf of this._leafs) {
-      ctx.save();
-
-      ctx.strokeWidth = this.lineWidth;
-      ctx.strokeStyle = this.borderColor;
-
-      ctx.beginPath();
-      ctx.moveTo(this.abs.x, this.abs.y);
-      ctx.lineTo(leaf.abs.x, leaf.abs.y);
-      ctx.closePath();
-      ctx.stroke();
-
-      ctx.restore();
-    }
-    super.render({ ctx });
-  }
 }
 
 export class ForestPlot extends HierarchyNode {
+  borderColor = "#909399";
+  lineWidth = 2
+
   set proportion([x, y]) {
     this._layout.oldProportion = this.proportion;
     this._layout.newProportion = { x, y };
@@ -160,10 +150,11 @@ export class ForestPlot extends HierarchyNode {
     this.moveLeaf(root, this, this._leafs.length, onFinish);
   }
 
-  destroyTree(root) {
+  destroyTree(root = this) {
     this.removeChild(root)
     for (const leaf of root._leafs) {
       this.destroyTree(leaf)
+      this.removeLeaf(leaf)
     }
   }
 
@@ -183,6 +174,26 @@ export class ForestPlot extends HierarchyNode {
     HierarchyNode.width = width
     HierarchyNode.height = height
     this.updateLayout(onFinish);
+  }
+
+  render({ ctx }) {
+    for (const tree of this.children) {
+      for (const leaf of tree._leafs) {
+        ctx.save();
+
+        ctx.strokeWidth = this.lineWidth;
+        ctx.strokeStyle = this.borderColor;
+
+        ctx.beginPath();
+        ctx.moveTo(tree.abs.x, tree.abs.y);
+        ctx.lineTo(leaf.abs.x, leaf.abs.y);
+        ctx.closePath();
+        ctx.stroke();
+
+        ctx.restore();
+      }
+    }
+    super.render({ ctx });
   }
 }
 

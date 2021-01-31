@@ -16,7 +16,7 @@ import React, { useLayoutEffect, useRef, useState } from "react";
 import { ControlTrack, useNormalStyles } from "../../components";
 import { CodeContext, CodeControl } from "../../lib/algo_desc";
 import pulgin from "../../lib/babel/plugin-senki-wait";
-import { Scene, SenkiArray } from "../../lib/senki";
+import { Scene, SenkiArray, SenkiLinkedNode } from "../../lib/senki";
 import { C } from "../../util";
 
 let scene: Scene;
@@ -95,12 +95,12 @@ function VisualEditor() {
     let { fakeCode, error, realCode } = makeCodeSource(code[mode], format);
 
     createNewCodeControl(realCode, statusRef, setStatus, setError, setCodeInfo);
-    console.log(realCode);
+
     if (error) return setError(error);
 
     if (format) {
       code[mode] = Mode[mode].header + fakeCode;
-      setCode([...code]);
+      editor.current?.editor.setValue(code[mode]);
       localStorage.setItem("code", JSON.stringify(code));
     }
 
@@ -108,7 +108,8 @@ function VisualEditor() {
   };
 
   const handlePlay = () => {
-    if (codeControl.status !== "running") return setTip("请先运行代码！");
+    if (!codeControl || codeControl.status !== "running")
+      return setTip("请先运行代码！");
     if (tempTask) tempTask();
     setStatus("play");
   };
@@ -116,23 +117,21 @@ function VisualEditor() {
   const handleRestart = () => {
     codeControl.destroy(); // 一定要记得销毁
 
-    let { fakeCode, error, realCode } = makeCodeSource(code[mode], format);
+    let { error, realCode } = makeCodeSource(code[mode], format);
 
     createNewCodeControl(realCode, statusRef, setStatus, setError, setCodeInfo);
-    console.log(realCode);
-    if (error) return setError(error);
 
-    if (format) {
-      code[mode] = Mode[mode].header + fakeCode;
-      setCode([...code]);
-      localStorage.setItem("code", JSON.stringify(code));
-    }
+    if (error) return setError(error);
 
     setStatus("play");
   };
 
   const handleStop = () => {
     setStatus("stop");
+  };
+
+  const handleNext = () => {
+    if (tempTask) tempTask();
   };
 
   const handleChangeSpeed = () => {};
@@ -142,6 +141,11 @@ function VisualEditor() {
     SenkiArray.config.scene = scene;
     SenkiArray.config.width = scene.width;
     SenkiArray.config.height = scene.height;
+    SenkiLinkedNode.setCanvasDimensions({
+      width: scene.width,
+      height: scene.height,
+    });
+    scene.add(SenkiLinkedNode.senkiForest);
   }, [canvas]);
 
   return (
@@ -181,6 +185,7 @@ function VisualEditor() {
             onStop={handleStop}
             onRestart={handleRestart}
             onChangeSpeed={handleChangeSpeed}
+            onNext={handleNext}
           />
         </div>
       </div>
@@ -191,15 +196,8 @@ function VisualEditor() {
               语言: <span className={classes.type}>JavaScript</span>
             </span>
             <FormControlLabel
-              control={
-                <Switch
-                  defaultChecked
-                  onChange={(_, v) => () => {
-                    setFormat(v);
-                  }}
-                  color="primary"
-                />
-              }
+              onChange={(_, v) => setFormat(v)}
+              control={<Switch defaultChecked color="primary" />}
               label="保存时自动格式化代码"
               labelPlacement="end"
             />
@@ -275,12 +273,13 @@ export default VisualEditor;
 function makeCodeSource(code: string, format: boolean) {
   code = code.split("\n").slice(2).join("\n").trim();
   let error = "",
-    fakeCode = "",
+    fakeCode = code,
     realCode = "";
 
   try {
     if (format) fakeCode = Babel.transform(code, {}).code;
-    realCode = Babel.transform(code, {
+
+    realCode = Babel.transform(fakeCode, {
       plugins: [pulgin],
     }).code;
   } catch (err) {
@@ -321,6 +320,9 @@ const createNewCodeControl = (
 
   const handleDestroy = () => {
     scene.removeAllChild();
+    SenkiLinkedNode.senkiForest.destroyTree();
+    SenkiLinkedNode.resetSenkiForest();
+    scene.add(SenkiLinkedNode.senkiForest);
   };
 
   const handleError = (err: string) => {

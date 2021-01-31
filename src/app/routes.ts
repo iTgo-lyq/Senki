@@ -27,8 +27,16 @@ export const routes: RouteItem[] = [
     component: AlgoSimulate,
   },
   {
+    path: "/simulatedetail/sort",
+    component: SimulateDetail.Sort,
+  },
+  {
+    path: "/simulatedetail/tree",
+    component: SimulateDetail.Tree,
+  },
+  {
     path: "/simulatedetail",
-    component: SimulateDetail,
+    component: SimulateDetail.Sort,
   },
   {
     path: "/visual-editor",

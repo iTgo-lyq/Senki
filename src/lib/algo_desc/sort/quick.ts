@@ -22,7 +22,7 @@ function quickSort(arr, begin, end) {
 `;
 
 const desc = [
-  "初始化数组",
+  "【快速排序】初始化数组",
   "执行快排",
   "递归出口",
   "左指针",

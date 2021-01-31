@@ -54,6 +54,8 @@ export class LeafNode extends HierarchyNode {
 
   constructor(key: string, args: any)
 
+  setKey(key: string): void;
+
   flag(color: string, onFinish: () => void): void
 
   render({ ctx }): void
@@ -66,7 +68,7 @@ export class ForestPlot extends HierarchyNode {
 
   addTree(root: HierarchyNode, onFinish: () => void): void;
 
-  destroyTree(root: HierarchyNode): void;
+  destroyTree(root?: HierarchyNode): void;
 
   /** Reingold-Tilford 算法 */
   updateLayout(onFinish: () => void): void

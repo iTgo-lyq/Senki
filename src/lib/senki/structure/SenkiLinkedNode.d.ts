@@ -10,7 +10,7 @@ class SenkiLinkedNode {
     borderColor: "#546fc6",
     fillColor: "#ffffff",
   }
-
+  static resetSenkiForest: () => void;
   static setCanvasDimensions: (obj: { width: number, height: number }) => void;
 
   key: string; // 键值， 同时作为圈内字符

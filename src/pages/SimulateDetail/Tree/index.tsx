@@ -1,26 +1,22 @@
 import React, { useLayoutEffect, useRef, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Tag, Input, Button } from "antd";
-import { ControlTrack, useNormalStyles } from "../../components";
-import { C } from "../../util";
-import CodeDesc from "./CodeDesc";
-import { Scene, SenkiArray } from "../../lib/senki";
+import { ControlTrack, useNormalStyles } from "../../../components";
+import { C } from "../../../util";
+import CodeDesc from "../CodeDesc";
+import { Scene, SenkiLinkedNode } from "../../../lib/senki";
 import {
   CodeContext,
   CodeControl,
-  makeBubbleAlgoSource,
-  makeMergeAlgoSource,
-  makeQuickSortAlgoSource,
-  makeSelectionAlgoSource,
-  makeShellAlgoSource,
-} from "../../lib/algo_desc";
-import { Link,useLocation } from "react-router-dom";
-import BreadcrumbNav from "./BreadcrumbNav";
-
+  makeInorderTraversalAlgoSource,
+  makeMinBinaryHeapAlgoSource,
+} from "../../../lib/algo_desc";
+import { Link, useLocation } from "react-router-dom";
+import BreadcrumbNav from "../BreadcrumbNav";
 
 let scene: Scene;
 let codeControl: CodeControl;
-let makeAlgoSource = makeBubbleAlgoSource;
+let makeAlgoSource = makeInorderTraversalAlgoSource;
 let fakeCode: string = "",
   desc: string[] = [],
   realCode: string = "";
@@ -30,9 +26,8 @@ let tempTask: () => void | undefined; // 保存断点继续的执行函数
 const SimulateDetail = () => {
   const classes = useStyles();
   const { flexRow, flexCol } = useNormalStyles();
-  const [reviseArray, setReviseArray] = useState([]);
+  const [reviseArray, setReviseArray] = useState();
   const location = useLocation();
-  const [data] = useState<[]>();
   const [status, setStatus] = useState<"stop" | "play" | "finish">("stop");
   const [codeInfo, setCodeInfo] = useState({ line: [-1, -1], desc: -1 });
 
@@ -64,6 +59,9 @@ const SimulateDetail = () => {
 
     const handleDestroy = () => {
       scene.removeAllChild();
+      SenkiLinkedNode.senkiForest.destroyTree();
+      SenkiLinkedNode.resetSenkiForest();
+      scene.add(SenkiLinkedNode.senkiForest);
     };
 
     codeControl.on("wait", handleWait);
@@ -79,7 +77,7 @@ const SimulateDetail = () => {
   };
 
   const handleRestart = () => {
-    [fakeCode, desc, realCode] = makeAlgoSource(data);
+    [fakeCode, desc, realCode] = makeAlgoSource(reviseArray);
     codeControl.destroy(); // 一定要记得销毁
     createNewCodeControl();
     setStatus("play");
@@ -89,31 +87,46 @@ const SimulateDetail = () => {
     setStatus("stop");
   };
 
+  const handleNext = () => {
+    if (tempTask) tempTask();
+  };
+
   const handleChangeSpeed = () => {};
 
-  const reviseArrayInputChange = (event: any) => {
-    // let reviseString = event.target.defaultValue;
-    console.log(event.target.defaultValue);
+  const reviseArrayInputChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    try {
+      let data = JSON.parse(event.target.value);
+      setReviseArray(data);
+    } catch (err) {
+      setReviseArray(undefined);
+    }
   };
 
   useLayoutEffect(() => {
     scene = new Scene(canvas.current!);
-    SenkiArray.config.scene = scene;
-    SenkiArray.config.width = scene.width;
-    SenkiArray.config.height = scene.height;
+    scene.add(SenkiLinkedNode.senkiForest);
+    SenkiLinkedNode.setCanvasDimensions({
+      width: scene.width,
+      height: scene.height,
+    });
 
     let path = location.pathname;
 
-    if (/bubble/.test(path)) makeAlgoSource = makeBubbleAlgoSource;
-    if (/merge/.test(path)) makeAlgoSource = makeMergeAlgoSource;
-    if (/quick/.test(path)) makeAlgoSource = makeQuickSortAlgoSource;
-    if (/selection/.test(path)) makeAlgoSource = makeSelectionAlgoSource;
-    if (/shell/.test(path)) makeAlgoSource = makeShellAlgoSource;
+    if (/inorderTraversal/.test(path))
+      makeAlgoSource = makeInorderTraversalAlgoSource;
+    if (/minBinaryHeap/.test(path))
+      makeAlgoSource = makeMinBinaryHeapAlgoSource;
 
-    [fakeCode, desc, realCode] = makeAlgoSource(data);
+    [fakeCode, desc, realCode] = makeAlgoSource();
 
     createNewCodeControl();
-  }, [canvas]);
+
+    return () => {
+      codeControl.destroy(); // 一定要记得销毁
+    };
+  }, [canvas, location.pathname]);
 
   return (
     <div className={C(classes.container, flexCol)}>
@@ -125,33 +138,15 @@ const SimulateDetail = () => {
       <div className={C(classes.operationArea, flexCol)}>
         <div className={flexRow}>
           <div className={classes.operationSingleArea}>
-            <div className={classes.operationPart}>
-              <Link to="/welcome">
-                <Tag color="magenta">冒泡</Tag>
+            <div style={{ padding: 24 }} className={classes.operationPart}>
+              <Link to="/simulatedetail/tree/minBinaryHeap">
+                <Tag color="magenta">最小堆</Tag>
               </Link>
-              <Link to="/welcome">
-                <Tag color="cyan">选择</Tag>
+              <Link to="/simulatedetail/tree/redBlackTree">
+                <Tag color="cyan">红黑树</Tag>
               </Link>
-              <Link to="/welcome">
-                <Tag color="geekblue">堆排序</Tag>
-              </Link>
-              <Link to="/welcome">
-                <Tag color="purple">快排</Tag>
-              </Link>
-              <Link to="/welcome">
-                <Tag color="green">归并</Tag>
-              </Link>
-              <Link to="/welcome">
-                <Tag color="blue">希尔</Tag>
-              </Link>
-              <Link to="/welcome">
-                <Tag color="purple">快排</Tag>
-              </Link>
-              <Link to="/welcome">
-                <Tag color="green">归并</Tag>
-              </Link>
-              <Link to="/welcome">
-                <Tag color="blue">希尔</Tag>
+              <Link to="/simulatedetail/tree/inorderTraversal">
+                <Tag color="geekblue">中序遍历</Tag>
               </Link>
             </div>
           </div>
@@ -167,7 +162,7 @@ const SimulateDetail = () => {
                   />
                 </div>
                 <div>
-                  <Button>确认</Button>
+                  <Button onClick={handleRestart}>确认</Button>
                 </div>
               </div>
             </div>
@@ -180,6 +175,7 @@ const SimulateDetail = () => {
           onStop={handleStop}
           onRestart={handleRestart}
           onChangeSpeed={handleChangeSpeed}
+          onNext={handleNext}
         />
       </div>
     </div>

@@ -21,6 +21,7 @@ type Props = {
   onStop?: () => void;
   onRestart?: () => void;
   onChangeSpeed?: (speed: number) => void;
+  onNext?: () => void;
 };
 
 const ControlTrack = (props: Props) => {
@@ -53,7 +54,7 @@ const ControlTrack = (props: Props) => {
         {status === "finish" && (
           <RedoOutlined className={classes.icon} onClick={props.onRestart} />
         )}
-        <CaretRightOutlined className={classes.icon} />
+        <CaretRightOutlined className={classes.icon} onClick={props.onNext}/>
         <StepForwardOutlined className={classes.icon} />
       </div>
     </div>

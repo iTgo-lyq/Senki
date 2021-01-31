@@ -1,4 +1,6 @@
 import { makeStyles } from "@material-ui/core/styles";
+import Link from "antd/lib/typography/Link";
+import React from "react";
 import { NavLink } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { C } from "../../util";
@@ -17,7 +19,9 @@ const Header = () => {
           <div>
             <img
               className={classes.logoImg}
-              src={`https://k-1258976754.cos.ap-shanghai.myqcloud.com/senki/logo-${!showTabbarBC ?'blue': 'white'}.png`}
+              src={`https://k-1258976754.cos.ap-shanghai.myqcloud.com/senki/logo-${
+                !showTabbarBC ? "blue" : "white"
+              }.png`}
               alt=""
             />
           </div>
@@ -49,13 +53,13 @@ const Header = () => {
           >
             动手演练
           </NavLink>
-          <NavLink
-            to="https://github.com/Tgo-zzz/Senki#senkijs"
-            activeStyle={{ color: "#407cc0" }}
+          <Link
+            style={{ color: !showTabbarBC ? "#1890ff" : "white" }}
+            href="https://github.com/Tgo-zzz/Senki#senkijs"
             className={C(classes.navItem, showTabbarBC)}
           >
             Senki.js文档
-          </NavLink>
+          </Link>
         </div>
       </div>
     </div>
@@ -89,7 +93,7 @@ const useStyles = makeStyles({
   logoImg: {
     width: "40px",
     height: "40px",
-    transition: "all 0.5s"
+    transition: "all 0.5s",
   },
   logoImgBox: {
     width: "40px",
@@ -119,6 +123,9 @@ const useStyles = makeStyles({
       cursor: "pointer",
       color: "white",
       textDecoration: "1px",
+    },
+    "&:active": {
+      color: "#407cc0",
     },
     fontWeight: 600,
     fontSize: "1rem",

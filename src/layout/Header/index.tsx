@@ -8,7 +8,7 @@ const Header = () => {
   const location = useLocation();
 
   const showTabbarBC =
-    !/^.{0}$|^\/$|welcome/.test(location.pathname) && classes.tabbarBC;
+    !/^.{0}$|^\/$|welcome|index/.test(location.pathname) && classes.tabbarBC;
 
   return (
     <div className={C(classes.headerContainer, showTabbarBC)}>

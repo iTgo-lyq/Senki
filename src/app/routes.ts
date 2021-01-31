@@ -20,7 +20,6 @@ export const routes: RouteItem[] = [
   },
   {
     path: "/index.html",
-    exact: true,
     component: Welcome,
   },
   {

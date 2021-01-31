@@ -35,7 +35,7 @@ function Welcome() {
           poster="https://pic.amikara.com/2021-01-29-035212.png"
         >
           <source
-            src="https://kairz-1258976754.cos.ap-shanghai.myqcloud.com/%E5%BE%AE%E6%B3%9Bv45.mp4"
+            src="https://k-1258976754.cos.ap-shanghai.myqcloud.com/senki/%E6%9C%80%E7%BB%88%E7%9A%84%E4%BA%86%20senki.m4v"
             type="video/mp4"
           />
         </video>

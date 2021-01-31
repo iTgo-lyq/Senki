@@ -66,7 +66,7 @@ export default class CodeControl extends MicroEvent<CodeControlEvent> {
   function wait(info) {
     return new Promise((resolve, reject) => {
       // console.log(${this.count})
-      ${this.constructor.name}.saveContext(${this.count}, { info, resolve, reject });
+      CodeControl.saveContext(${this.count}, { info, resolve, reject });
     });
   };
   `;
@@ -90,8 +90,8 @@ export default class CodeControl extends MicroEvent<CodeControlEvent> {
     this.executableFunction()
       .catch((err: any) => {
         this.status = "error";
-        console.warn(err);
         this.emit("error", err);
+        throw err
       })
       .finally(() => {
         this.status = "idle";

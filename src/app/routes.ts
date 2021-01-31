@@ -19,6 +19,11 @@ export const routes: RouteItem[] = [
     component: Welcome,
   },
   {
+    path: "/index.html",
+    exact: true,
+    component: Welcome,
+  },
+  {
     path: "/welcome",
     component: Welcome,
   },

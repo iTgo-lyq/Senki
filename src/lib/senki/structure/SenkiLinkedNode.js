@@ -133,7 +133,10 @@ class SenkiLinkedNode {
 
   /** 加入到第一个节点 */
   set left(n) {
-    if (this._existClosedLoop(n)) return;
+    if (this._existClosedLoop(n)) {
+      console.error("_existClosedLoop")
+      return;
+    }
     if (!n) return this.removeChild(this._left);
     this.addChild(n, 0)
     this._left = n
@@ -146,7 +149,10 @@ class SenkiLinkedNode {
 
   /** 加入到最后一个节点 */
   set right(n) {
-    if (this._existClosedLoop(n)) return;
+    if (this._existClosedLoop(n)) {
+      console.error("_existClosedLoop")
+      return;
+    };
     if (!n) return this.removeChild(this._right);
     this.addChild(n, this._childs.length)
     this._right = n

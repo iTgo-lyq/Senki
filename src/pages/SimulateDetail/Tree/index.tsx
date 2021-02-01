@@ -10,6 +10,7 @@ import {
   CodeControl,
   makeInorderTraversalAlgoSource,
   makeMinBinaryHeapAlgoSource,
+  makeRedBlackTreeAlgoSource,
 } from "../../../lib/algo_desc";
 import { Link, useLocation } from "react-router-dom";
 import BreadcrumbNav from "../BreadcrumbNav";
@@ -118,6 +119,7 @@ const SimulateDetail = () => {
       makeAlgoSource = makeInorderTraversalAlgoSource;
     if (/minBinaryHeap/.test(path))
       makeAlgoSource = makeMinBinaryHeapAlgoSource;
+    if (/redBlackTree/.test(path)) makeAlgoSource = makeRedBlackTreeAlgoSource;
 
     [fakeCode, desc, realCode] = makeAlgoSource();
 

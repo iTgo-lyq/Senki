@@ -81,6 +81,7 @@ export default function ({ types: t }) {
         }
       },
       BlockStatement(path) {
+        if (path.parentPath.node.kind === "constructor") return;
         let len = path.node.body.length;
         for (let i = 0; i < len; i++) {
           path.node.body.splice(
@@ -97,9 +98,15 @@ export default function ({ types: t }) {
           );
       },
       Function(path) {
+        if (path.node.kind === "constructor") return;
         path.node.async = true;
       },
       CallExpression(path) {
+        let parent = path.parentPath;
+        while (parent) {
+          if (parent.node.kind === "constructor") return;
+          parent = parent.parentPath;
+        }
         if (!t.isAwaitExpression(path.parentPath.node))
           path.replaceWith(t.awaitExpression(path.node))
       }
